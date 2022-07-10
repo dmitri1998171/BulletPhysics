@@ -6,13 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "BulletComponent.h"
 #include "FPSProjectile.generated.h"
 
 UCLASS()
 class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
-	
+    
 public:	
 	// Sets default values for this actor's properties
 	AFPSProjectile();
@@ -31,8 +32,10 @@ public:
     
     // Projectile movement component.
     UPROPERTY(VisibleAnywhere, Category = Movement)
-    UProjectileMovementComponent* ProjectileMovementComponent;
-
+//    UProjectileMovementComponent* ProjectileMovementComponent;
+//    UProjectileComponent* ProjectileMovementComponent;
+    UBulletComponent* ProjectileMovementComponent;
+    
     // Projectile mesh
     UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
     UStaticMeshComponent* ProjectileMeshComponent;

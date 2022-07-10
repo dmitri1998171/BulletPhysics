@@ -21,8 +21,8 @@ void EmptyLinkFunctionForGeneratedCodeBulletPhysics_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0xFD89A010,
-				0x4B08F9F9,
+				0x22F25EA6,
+				0x66A2AE7E,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

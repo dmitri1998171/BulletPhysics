@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/BulletPhysics.Build.cs",
+		"/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics.Target.cs",
+		"/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysicsEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.2"
+}

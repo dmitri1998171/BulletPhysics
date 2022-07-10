@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "BulletPhysics",
+			"Path": "/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "BulletPhysicsEditor",
+			"Path": "/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysicsEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

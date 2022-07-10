@@ -22,6 +22,8 @@
 		4D3165C9723133E9DE09C48E /* FPSCharacter.h in Sources */ = {isa = PBXBuildFile; fileRef = CF715BD91E007C142DC221B6 /* FPSCharacter.h */; };
 		5198ACAF49242DC149D2A846 /* FPSProjectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F655ADE853442CC3AB52B84B /* FPSProjectile.cpp */; };
 		E5BB21D3B4B0DB8B0FAF77D9 /* FPSProjectile.h in Sources */ = {isa = PBXBuildFile; fileRef = 84849FB9DC0244FDC915E3C9 /* FPSProjectile.h */; };
+		5393C0E9965D0AFFE061C98E /* ProjectileComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02590C98F61C3646DDD364CF /* ProjectileComponent.cpp */; };
+		A572E7A90DBB81CFD7588021 /* ProjectileComponent.h in Sources */ = {isa = PBXBuildFile; fileRef = EFF2F5B2A577F922BA10B782 /* ProjectileComponent.h */; };
 		B598FEA846B56A21864682FE /* BulletPhysicsEditor.Target.cs in Sources */ = {isa = PBXBuildFile; fileRef = 10E4841AB4578BB4EF66F8B7 /* BulletPhysicsEditor.Target.cs */; };
 /* End PBXBuildFile section */
 
@@ -41,12 +43,14 @@
 		CF715BD91E007C142DC221B6 /* FPSCharacter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; name = "FPSCharacter.h"; path = "../../Source/BulletPhysics/FPSCharacter.h"; sourceTree = SOURCE_ROOT; };
 		F655ADE853442CC3AB52B84B /* FPSProjectile.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; name = "FPSProjectile.cpp"; path = "../../Source/BulletPhysics/FPSProjectile.cpp"; sourceTree = SOURCE_ROOT; };
 		84849FB9DC0244FDC915E3C9 /* FPSProjectile.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; name = "FPSProjectile.h"; path = "../../Source/BulletPhysics/FPSProjectile.h"; sourceTree = SOURCE_ROOT; };
+		02590C98F61C3646DDD364CF /* ProjectileComponent.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; name = "ProjectileComponent.cpp"; path = "../../Source/BulletPhysics/ProjectileComponent.cpp"; sourceTree = SOURCE_ROOT; };
+		EFF2F5B2A577F922BA10B782 /* ProjectileComponent.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; name = "ProjectileComponent.h"; path = "../../Source/BulletPhysics/ProjectileComponent.h"; sourceTree = SOURCE_ROOT; };
 		10E4841AB4578BB4EF66F8B7 /* BulletPhysicsEditor.Target.cs */ = {isa = PBXFileReference; explicitFileType = file.text; name = "BulletPhysicsEditor.Target.cs"; path = "../../Source/BulletPhysicsEditor.Target.cs"; sourceTree = SOURCE_ROOT; };
-		F5AB06ADDE9DEC7F2FF14324 /* BulletPhysics */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = BulletPhysics; sourceTree = BUILT_PRODUCTS_DIR; };
+		86D342C0590CA9090203855A /* BulletPhysics */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = BulletPhysics; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CED10F57AE2E139DA69DEE87 = {
+		D692C7A27A43A0755618CC59 = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -54,13 +58,14 @@
 				B2B5A9F54ED7267C332514CA /* BulletPhysicsGameModeBase.cpp in Sources */,
 				F30EDBF5775B1E1F19862D0A /* FPSCharacter.cpp in Sources */,
 				5198ACAF49242DC149D2A846 /* FPSProjectile.cpp in Sources */,
+				5393C0E9965D0AFFE061C98E /* ProjectileComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-	75BB55032FC0BC723D587BF6 /* Embed App Extensions */ = {
+	40F8D5BDF927E918DB6C6826 /* Embed App Extensions */ = {
 		isa = PBXCopyFilesBuildPhase;
 		buildActionMask = 2147483647;
 		dstPath = "";
@@ -72,35 +77,35 @@
 	};
 /* End PBXCopyFilesBuildPhase section */
 /* Begin PBXContainerItemProxy section */
-		EFF2F5B2A577F922BA10B782 /* PBXContainerItemProxy */ = {
+		B4D4F03A6B01F1FDAFD13C43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FB86A4EDDCAF6910AD8F710B /* Project object */;
+			containerPortal = CED10F57AE2E139DA69DEE87 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7561F125DFFAB6AAD9EBA903;
+			remoteGlobalIDString = FB86A4EDDCAF6910AD8F710B;
 			remoteInfo = "BulletPhysics_Build";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXTargetDependency section */
-		A572E7A90DBB81CFD7588021 /* PBXTargetDependency */ = {
+		2784A165DA411594BA64B362 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7561F125DFFAB6AAD9EBA903 /* BulletPhysics_Build */;
-			targetProxy = EFF2F5B2A577F922BA10B782 /* PBXContainerItemProxy */;
+			target = FB86A4EDDCAF6910AD8F710B /* BulletPhysics_Build */;
+			targetProxy = B4D4F03A6B01F1FDAFD13C43 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXGroup section */
-		FE543AADBBAA5FB04E963FE5 = {
+		8A54EE1BC8E8A4C79D5CDFE9 = {
 			isa = PBXGroup;
 			children = (
-				8B968C43CFC0C5D51F7F1263 /* Config */,
-				38BB17CF683CF56547F8F53B /* Source */,
+				31D41941903ADF92A1510098 /* Config */,
+				6AA26611883438EAD887AB4C /* Source */,
 				F519DBC82B7C343B37F88500 /* BulletPhysics.uproject */,
-				5C0321FF672C95F76237B6DD /* Products */,
+				9A08021F82A13FBE15998AAC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8B968C43CFC0C5D51F7F1263 = {
+		31D41941903ADF92A1510098 = {
 			isa = PBXGroup;
 			children = (
 				9F1A6E3CBDFC1C4D72A426E5 /* DefaultEditor.ini */,
@@ -112,10 +117,10 @@
 			path = "/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Config";
 			sourceTree = "<absolute>";
 		};
-		38BB17CF683CF56547F8F53B = {
+		6AA26611883438EAD887AB4C = {
 			isa = PBXGroup;
 			children = (
-				423655236F0EF7DD2B4EE38F /* BulletPhysics */,
+				99440C29A159581F5D73F19B /* BulletPhysics */,
 				CF746C0FF4BEC24D1E04EB4B /* BulletPhysics.Target.cs */,
 				10E4841AB4578BB4EF66F8B7 /* BulletPhysicsEditor.Target.cs */,
 			);
@@ -123,7 +128,7 @@
 			path = "/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source";
 			sourceTree = "<absolute>";
 		};
-		423655236F0EF7DD2B4EE38F = {
+		99440C29A159581F5D73F19B = {
 			isa = PBXGroup;
 			children = (
 				F7467CBEC498E0D06675D698 /* BulletPhysics.Build.cs */,
@@ -135,15 +140,17 @@
 				CF715BD91E007C142DC221B6 /* FPSCharacter.h */,
 				F655ADE853442CC3AB52B84B /* FPSProjectile.cpp */,
 				84849FB9DC0244FDC915E3C9 /* FPSProjectile.h */,
+				02590C98F61C3646DDD364CF /* ProjectileComponent.cpp */,
+				EFF2F5B2A577F922BA10B782 /* ProjectileComponent.h */,
 			);
 			name = "BulletPhysics";
 			path = "/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics";
 			sourceTree = "<absolute>";
 		};
-		5C0321FF672C95F76237B6DD /* Products */ = {
+		9A08021F82A13FBE15998AAC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F5AB06ADDE9DEC7F2FF14324 /* BulletPhysics */,
+				86D342C0590CA9090203855A /* BulletPhysics */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,10 +158,10 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		7561F125DFFAB6AAD9EBA903 /* BulletPhysics_Build */ = {
+		FB86A4EDDCAF6910AD8F710B /* BulletPhysics_Build */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION) $(UE_BUILD_TARGET_NAME) $(PLATFORM_NAME) $(UE_BUILD_TARGET_CONFIG) \"/Users/dmitry/Documents/Unreal Projects/BulletPhysics/BulletPhysics.uproject\"";
-			buildConfigurationList = 2784A165DA411594BA64B362 /* Build configuration list for PBXLegacyTarget "BulletPhysics_Build" */;
+			buildConfigurationList = 097C3ED7FAAB5456475DDF07 /* Build configuration list for PBXLegacyTarget "BulletPhysics_Build" */;
 			buildPhases = (
 			);
 			buildToolPath = "/Users/Shared/Epic Games/UE_4.27/Engine/Build/BatchFiles/Mac/XcodeBuild.sh";
@@ -168,30 +175,30 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		5393C0E9965D0AFFE061C98E /* BulletPhysics */ = {
+		F5AB06ADDE9DEC7F2FF14324 /* BulletPhysics */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02590C98F61C3646DDD364CF /* Build configuration list for PBXNativeTarget "BulletPhysics" */;
+			buildConfigurationList = 7561F125DFFAB6AAD9EBA903 /* Build configuration list for PBXNativeTarget "BulletPhysics" */;
 			buildPhases = (
-				75BB55032FC0BC723D587BF6 /* Embed App Extensions */, 
-				8A54EE1BC8E8A4C79D5CDFE9 /* Shell Script */, 
+				40F8D5BDF927E918DB6C6826 /* Embed App Extensions */, 
+				BE9CF09B19BCE1F1CA414435 /* Shell Script */, 
 			);
 			dependencies = (
-				A572E7A90DBB81CFD7588021 /* PBXTargetDependency */,
+				2784A165DA411594BA64B362 /* PBXTargetDependency */,
 			);
 			name = "BulletPhysics";
 			passBuildSettingsInEnvironment = 1;
 			productName = "BulletPhysics";
-			productReference = "F5AB06ADDE9DEC7F2FF14324";
+			productReference = "86D342C0590CA9090203855A";
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXNativeTarget section */
-		B4D4F03A6B01F1FDAFD13C43 /* BulletPhysics_Index */ = {
+		FE543AADBBAA5FB04E963FE5 /* BulletPhysics_Index */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 86D342C0590CA9090203855A /* Build configuration list for PBXNativeTarget "BulletPhysics_Index" */;
+			buildConfigurationList = 5C0321FF672C95F76237B6DD /* Build configuration list for PBXNativeTarget "BulletPhysics_Index" */;
 			buildPhases = (
-				CED10F57AE2E139DA69DEE87 /* Sources */,
+				D692C7A27A43A0755618CC59 /* Sources */,
 			);
 			dependencies = (
 			);
@@ -203,38 +210,38 @@
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		FB86A4EDDCAF6910AD8F710B /* Project object */ = {
+		CED10F57AE2E139DA69DEE87 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 2000;
 				ORGANIZATIONNAME = "Epic Games, Inc.";
 				TargetAttributes = {
-					5393C0E9965D0AFFE061C98E = {
+					F5AB06ADDE9DEC7F2FF14324 = {
 						ProvisioningStyle = Manual;
 					};
 				};
 			};
-			buildConfigurationList = 097C3ED7FAAB5456475DDF07 /* Build configuration list for PBXProject "BulletPhysics" */;
+			buildConfigurationList = 75BB55032FC0BC723D587BF6 /* Build configuration list for PBXProject "BulletPhysics" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en
 			);
-			mainGroup = FE543AADBBAA5FB04E963FE5;
-			productRefGroup = 5C0321FF672C95F76237B6DD;
+			mainGroup = 8A54EE1BC8E8A4C79D5CDFE9;
+			productRefGroup = 9A08021F82A13FBE15998AAC;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-			5393C0E9965D0AFFE061C98E /* BulletPhysics */,
-			7561F125DFFAB6AAD9EBA903 /* BulletPhysics_Build */,
-			B4D4F03A6B01F1FDAFD13C43 /* BulletPhysics_Index */,
+			F5AB06ADDE9DEC7F2FF14324 /* BulletPhysics */,
+			FB86A4EDDCAF6910AD8F710B /* BulletPhysics_Build */,
+			FE543AADBBAA5FB04E963FE5 /* BulletPhysics_Index */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin XCBuildConfiguration section */
-		9A08021F82A13FBE15998AAC /* "DebugGame" */ = {
+		20024C59BC6993823CA8DF8A /* "DebugGame" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -517,7 +524,7 @@
 			};
 			name = "DebugGame";
 		};
-		20024C59BC6993823CA8DF8A /* "DebugGame Editor" */ = {
+		F6F3415870D90C7E1D6E06B7 /* "DebugGame Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -800,7 +807,7 @@
 			};
 			name = "DebugGame Editor";
 		};
-		F6F3415870D90C7E1D6E06B7 /* "Development" */ = {
+		9C89FDDB90A3B327DF224211 /* "Development" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1083,7 +1090,7 @@
 			};
 			name = "Development";
 		};
-		9C89FDDB90A3B327DF224211 /* "Development Editor" */ = {
+		578A1E70221D8A96C31B8694 /* "Development Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1366,7 +1373,7 @@
 			};
 			name = "Development Editor";
 		};
-		578A1E70221D8A96C31B8694 /* "Shipping" */ = {
+		492CEB2263FBA8BD0C17B430 /* "Shipping" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1649,7 +1656,7 @@
 			};
 			name = "Shipping";
 		};
-		D692C7A27A43A0755618CC59 /* "DebugGame" */ = {
+		CB81C5EDAF72D16A29A1E4DE /* "DebugGame" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SUPPORTED_PLATFORMS = "macosx iphoneos";
@@ -1677,7 +1684,7 @@
 			};
 			name = "DebugGame";
 		};
-		CB81C5EDAF72D16A29A1E4DE /* "DebugGame Editor" */ = {
+		0CF94A6018E1D62CE3CE131F /* "DebugGame Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64";
@@ -1693,7 +1700,7 @@
 			};
 			name = "DebugGame Editor";
 		};
-		0CF94A6018E1D62CE3CE131F /* "Development" */ = {
+		48C9C74F4D1982475506C6E1 /* "Development" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SUPPORTED_PLATFORMS = "macosx iphoneos";
@@ -1721,7 +1728,7 @@
 			};
 			name = "Development";
 		};
-		48C9C74F4D1982475506C6E1 /* "Development Editor" */ = {
+		0BEE32388CD11896229A7E07 /* "Development Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64";
@@ -1737,7 +1744,7 @@
 			};
 			name = "Development Editor";
 		};
-		0BEE32388CD11896229A7E07 /* "Shipping" */ = {
+		E7B0F4752EAE2A3D80C7AE66 /* "Shipping" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SUPPORTED_PLATFORMS = "macosx iphoneos";
@@ -1765,7 +1772,7 @@
 			};
 			name = "Shipping";
 		};
-		40F8D5BDF927E918DB6C6826 /* "DebugGame" */ = {
+		53045C9937DB8FFEB49F9DF7 /* "DebugGame" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64 arm64";
@@ -1778,7 +1785,7 @@
 			};
 			name = "DebugGame";
 		};
-		53045C9937DB8FFEB49F9DF7 /* "DebugGame Editor" */ = {
+		155F9143B7CE21ED34C5A344 /* "DebugGame Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64";
@@ -1791,7 +1798,7 @@
 			};
 			name = "DebugGame Editor";
 		};
-		155F9143B7CE21ED34C5A344 /* "Development" */ = {
+		54FB98C5F5A79670F9B1A62D /* "Development" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64 arm64";
@@ -1804,7 +1811,7 @@
 			};
 			name = "Development";
 		};
-		54FB98C5F5A79670F9B1A62D /* "Development Editor" */ = {
+		BCF135D9A14EEDD869CE6E6B /* "Development Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64";
@@ -1817,7 +1824,7 @@
 			};
 			name = "Development Editor";
 		};
-		BCF135D9A14EEDD869CE6E6B /* "Shipping" */ = {
+		833C6F1130C847F36B129075 /* "Shipping" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64 arm64";
@@ -1830,7 +1837,7 @@
 			};
 			name = "Shipping";
 		};
-		BE9CF09B19BCE1F1CA414435 /* "DebugGame" */ = {
+		DA8F5C72D9E6EA16BC66CF97 /* "DebugGame" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SUPPORTED_PLATFORMS = "macosx iphoneos";
@@ -1858,7 +1865,7 @@
 			};
 			name = "DebugGame";
 		};
-		DA8F5C72D9E6EA16BC66CF97 /* "DebugGame Editor" */ = {
+		9A368DDA931ED96B89A465DF /* "DebugGame Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64";
@@ -1874,7 +1881,7 @@
 			};
 			name = "DebugGame Editor";
 		};
-		9A368DDA931ED96B89A465DF /* "Development" */ = {
+		D0465C91117B6477F47B91CA /* "Development" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SUPPORTED_PLATFORMS = "macosx iphoneos";
@@ -1902,7 +1909,7 @@
 			};
 			name = "Development";
 		};
-		D0465C91117B6477F47B91CA /* "Development Editor" */ = {
+		89254EDC271069B5BFC88523 /* "Development Editor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				VALID_ARCHS = "x86_64";
@@ -1918,7 +1925,7 @@
 			};
 			name = "Development Editor";
 		};
-		89254EDC271069B5BFC88523 /* "Shipping" */ = {
+		62CA756E25B05E72711DF476 /* "Shipping" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SUPPORTED_PLATFORMS = "macosx iphoneos";
@@ -1949,57 +1956,57 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		097C3ED7FAAB5456475DDF07 /* Build configuration list for PBXProject "BulletPhysics" */ = {
+		75BB55032FC0BC723D587BF6 /* Build configuration list for PBXProject "BulletPhysics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9A08021F82A13FBE15998AAC /* "DebugGame" */,
-				20024C59BC6993823CA8DF8A /* "DebugGame Editor" */,
-				F6F3415870D90C7E1D6E06B7 /* "Development" */,
-				9C89FDDB90A3B327DF224211 /* "Development Editor" */,
-				578A1E70221D8A96C31B8694 /* "Shipping" */,
+				20024C59BC6993823CA8DF8A /* "DebugGame" */,
+				F6F3415870D90C7E1D6E06B7 /* "DebugGame Editor" */,
+				9C89FDDB90A3B327DF224211 /* "Development" */,
+				578A1E70221D8A96C31B8694 /* "Development Editor" */,
+				492CEB2263FBA8BD0C17B430 /* "Shipping" */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Development;
 		};
-		2784A165DA411594BA64B362 /* Build configuration list for PBXLegacyTarget "BulletPhysics_Build" */ = {
+		097C3ED7FAAB5456475DDF07 /* Build configuration list for PBXLegacyTarget "BulletPhysics_Build" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				40F8D5BDF927E918DB6C6826 /* "DebugGame" */,
-				53045C9937DB8FFEB49F9DF7 /* "DebugGame Editor" */,
-				155F9143B7CE21ED34C5A344 /* "Development" */,
-				54FB98C5F5A79670F9B1A62D /* "Development Editor" */,
-				BCF135D9A14EEDD869CE6E6B /* "Shipping" */,
+				53045C9937DB8FFEB49F9DF7 /* "DebugGame" */,
+				155F9143B7CE21ED34C5A344 /* "DebugGame Editor" */,
+				54FB98C5F5A79670F9B1A62D /* "Development" */,
+				BCF135D9A14EEDD869CE6E6B /* "Development Editor" */,
+				833C6F1130C847F36B129075 /* "Shipping" */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Development;
 		};
-		02590C98F61C3646DDD364CF /* Build configuration list for PBXNativeTarget "BulletPhysics" */ = {
+		7561F125DFFAB6AAD9EBA903 /* Build configuration list for PBXNativeTarget "BulletPhysics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D692C7A27A43A0755618CC59 /* "DebugGame" */,
-				CB81C5EDAF72D16A29A1E4DE /* "DebugGame Editor" */,
-				0CF94A6018E1D62CE3CE131F /* "Development" */,
-				48C9C74F4D1982475506C6E1 /* "Development Editor" */,
-				0BEE32388CD11896229A7E07 /* "Shipping" */,
+				CB81C5EDAF72D16A29A1E4DE /* "DebugGame" */,
+				0CF94A6018E1D62CE3CE131F /* "DebugGame Editor" */,
+				48C9C74F4D1982475506C6E1 /* "Development" */,
+				0BEE32388CD11896229A7E07 /* "Development Editor" */,
+				E7B0F4752EAE2A3D80C7AE66 /* "Shipping" */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Development;
 		};
-		86D342C0590CA9090203855A /* Build configuration list for PBXNativeTarget "BulletPhysics_Index" */ = {
+		5C0321FF672C95F76237B6DD /* Build configuration list for PBXNativeTarget "BulletPhysics_Index" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BE9CF09B19BCE1F1CA414435 /* "DebugGame" */,
-				DA8F5C72D9E6EA16BC66CF97 /* "DebugGame Editor" */,
-				9A368DDA931ED96B89A465DF /* "Development" */,
-				D0465C91117B6477F47B91CA /* "Development Editor" */,
-				89254EDC271069B5BFC88523 /* "Shipping" */,
+				DA8F5C72D9E6EA16BC66CF97 /* "DebugGame" */,
+				9A368DDA931ED96B89A465DF /* "DebugGame Editor" */,
+				D0465C91117B6477F47B91CA /* "Development" */,
+				89254EDC271069B5BFC88523 /* "Development Editor" */,
+				62CA756E25B05E72711DF476 /* "Shipping" */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Development;
 		};
 /* End XCConfigurationList section */
 /* Begin PBXShellScriptBuildPhase section */
-		8A54EE1BC8E8A4C79D5CDFE9 /* Sign Frameworks */ = {
+		BE9CF09B19BCE1F1CA414435 /* Sign Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2015,5 +2022,5 @@
 		};
 /* End PBXShellScriptBuildPhase section */
 	};
-	rootObject = FB86A4EDDCAF6910AD8F710B /* Project object */;
+	rootObject = CED10F57AE2E139DA69DEE87 /* Project object */;
 }

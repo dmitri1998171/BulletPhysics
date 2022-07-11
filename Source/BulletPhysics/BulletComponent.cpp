@@ -12,16 +12,19 @@ UBulletComponent::UBulletComponent() {
     
     EnableGravity = true;
     Gravity = FVector(0, 0, GRAVITY);
+    GravityScale = 0.1;
     
 /*   Система СИ: кг-м-с   */
-    Mass = 0.009;
+    Mass = 0.004;
     
     InitialSpeed = 500;
     
-    AirResist = 1;
-    Wind = 1;
-    Sk = 1;
+    EnableWind = true;
+    Wind = FVector(1, 0, 0);
     
+    AirResistance = 1;
+    SquareCoef = 1;
+
     Parent = GetOwner();
     if (Parent != nullptr) {
         PlayerPos = Parent->GetActorLocation();
@@ -42,9 +45,9 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 //    Здесь костыль, потому что изменение Velocity(выбор направления) происходит после вызова BeginPlay()
     if(isFired) {
-        float X = Mass * InitialSpeed * Velocity.X * DeltaTime;
-        float Y = Mass * InitialSpeed * Velocity.Y * DeltaTime;
-        float Z = Mass * InitialSpeed * Velocity.Z * DeltaTime;
+        float X = Mass * InitialSpeed * Velocity.X * 10;
+        float Y = Mass * InitialSpeed * Velocity.Y * 10;
+        float Z = Mass * InitialSpeed * Velocity.Z * 10;
         
         Force.Set(X, Y, Z);
         
@@ -63,14 +66,17 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 }
 
 void UBulletComponent::AddResistance(float DeltaTime) {
-    float value = ((AirResist + Wind) * Sk);
+    if (EnableGravity)
+        Force += Gravity * GravityScale * DeltaTime;
     
-    if (!EnableGravity)
-        Gravity = FVector(0, 0, 0);
+    if (EnableWind)
+        Force -= Wind * DeltaTime;
     
-    Force.X += (Gravity.X + value) * DeltaTime;
-    Force.Y += (Gravity.Y + value) * DeltaTime;
-    Force.Z += (Gravity.Z + value) * DeltaTime;
+    float value = AirResistance * SquareCoef;
+
+    Force.X -= value * Velocity.X * DeltaTime;
+    Force.Y -= value * Velocity.Y * DeltaTime;
+    Force.Z -= value * Velocity.Z * DeltaTime;
 }
 
 void UBulletComponent::showLog(float DeltaTime) {
@@ -80,6 +86,8 @@ void UBulletComponent::showLog(float DeltaTime) {
         
 //        GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Red, FString::Printf(TEXT("bbox: %s"), *BoundingBox.ToString()));
 //        GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Red, FString::Printf(TEXT("bbox Volume: %f"), BoundingBox.GetVolume()));
+
+        GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Red, FString::Printf(TEXT("Velocity: %s"), *Velocity.ToString()));
         
         GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Red, FString::Printf(TEXT("Force: %s"), *Force.ToString()));
         

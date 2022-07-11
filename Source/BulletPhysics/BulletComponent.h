@@ -20,8 +20,8 @@ class BULLETPHYSICS_API UBulletComponent : public UActorComponent
     FVector PlayerPos;
     FBox BoundingBox;
 
-    FVector Force;
     FVector Impulse;
+    FVector Force;
     
     FVector Start;
     FVector End;
@@ -43,32 +43,42 @@ public:
     bool EnableLog;
 
     
-    UPROPERTY(EditAnywhere, Category = Physics)
+    UPROPERTY(EditAnywhere, Category = "Physics")
     bool EnableGravity;
 
-    UPROPERTY(EditAnywhere, Category = Physics)
+    UPROPERTY(EditAnywhere, Category = "Physics")
     FVector Gravity;
+    
+    UPROPERTY(EditAnywhere, Category = "Physics")
+    float GravityScale;
 
     
-    UPROPERTY(EditAnywhere, Category = "Physics\|Material")
+    UPROPERTY(EditAnywhere, Category = "Physics")
     float Mass;
 
     
-    UPROPERTY(EditAnywhere, Category = "Physics\|Speed")
     FVector Velocity;
     
-    UPROPERTY(EditAnywhere, Category = "Physics\|Speed")
-    float InitialSpeed;     // стартовая Скорость снаряда (зависит от типа орудия, из котор. стреляют)
-
+    // стартовая Скорость снаряда (зависит от типа орудия, из котор. стреляют)
+    UPROPERTY(EditAnywhere, Category = "Physics")
+    float InitialSpeed;
+    
+    
+    // Ветер
+    UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
+    bool EnableWind;
     
     UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
-    float AirResist;    // Сопротивление воздуха
+    FVector Wind;
     
-    UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
-    float Wind;         // Ветер
     
+    // Сопротивление воздуха
     UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
-    float Sk;           // Sk - коэф. площади (на сколько ветер воздействует на объект)
+    float AirResistance;
+    
+    // Коэф. площади (на сколько сильно ветер воздействует на объект)
+    UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
+    float SquareCoef;
     
         
     UFUNCTION()
@@ -80,3 +90,14 @@ public:
     UFUNCTION()
     void DrawTrajectory();
 };
+
+/*
+ 
+ Пуля:
+    Скорость ~ 300-500 м/с пистолет; ~ 700-1000 м/с автомат
+    Вес ~ 3-4 г
+ 
+ Стрела:
+    Скорость ~ до 100 м/с лук; ~ до 150 м/с арбалет
+    Вес 13–17 гран на каждый кг натяжения (1 гран = 0,0648 г)
+ */

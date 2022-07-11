@@ -71,9 +71,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::Function_MetaDataParams[] = {
-		{ "Comment", "// Sk - \xd0\xba\xd0\xbe\xd1\x8d\xd1\x84. \xd0\xbf\xd0\xbb\xd0\xbe\xd1\x89\xd0\xb0\xd0\xb4\xd0\xb8 (\xd0\xbd\xd0\xb0 \xd1\x81\xd0\xba\xd0\xbe\xd0\xbb\xd1\x8c\xd0\xba\xd0\xbe \xd0\xb2\xd0\xb5\xd1\x82\xd0\xb5\xd1\x80 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd0\xb5\xd0\xb9\xd1\x81\xd1\x82\xd0\xb2\xd1\x83\xd0\xb5\xd1\x82 \xd0\xbd\xd0\xb0 \xd0\xbe\xd0\xb1\xd1\x8a\xd0\xb5\xd0\xba\xd1\x82)\n" },
 		{ "ModuleRelativePath", "BulletComponent.h" },
-		{ "ToolTip", "Sk - \xd0\xba\xd0\xbe\xd1\x8d\xd1\x84. \xd0\xbf\xd0\xbb\xd0\xbe\xd1\x89\xd0\xb0\xd0\xb4\xd0\xb8 (\xd0\xbd\xd0\xb0 \xd1\x81\xd0\xba\xd0\xbe\xd0\xbb\xd1\x8c\xd0\xba\xd0\xbe \xd0\xb2\xd0\xb5\xd1\x82\xd0\xb5\xd1\x80 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd0\xb5\xd0\xb9\xd1\x81\xd1\x82\xd0\xb2\xd1\x83\xd0\xb5\xd1\x82 \xd0\xbd\xd0\xb0 \xd0\xbe\xd0\xb1\xd1\x8a\xd0\xb5\xd0\xba\xd1\x82)" },
 	};
 #endif
 	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBulletComponent, nullptr, "AddResistance", nullptr, nullptr, sizeof(BulletComponent_eventAddResistance_Parms), Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::Function_MetaDataParams)) };
@@ -166,29 +164,34 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 #endif
 		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Gravity;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_GravityScale_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_GravityScale;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Mass_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Mass;
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Velocity_MetaData[];
-#endif
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Velocity;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_InitialSpeed_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_InitialSpeed;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_AirResist_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_EnableWind_MetaData[];
 #endif
-		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_AirResist;
+		static void NewProp_EnableWind_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_EnableWind;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Wind_MetaData[];
 #endif
-		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Wind;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Wind;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Sk_MetaData[];
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_AirResistance_MetaData[];
 #endif
-		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Sk;
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_AirResistance;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_SquareCoef_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_SquareCoef;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -198,7 +201,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_BulletPhysics,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UBulletComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UBulletComponent_AddResistance, "AddResistance" }, // 2649586305
+		{ &Z_Construct_UFunction_UBulletComponent_AddResistance, "AddResistance" }, // 1031185360
 		{ &Z_Construct_UFunction_UBulletComponent_DrawTrajectory, "DrawTrajectory" }, // 346492340
 		{ &Z_Construct_UFunction_UBulletComponent_showLog, "showLog" }, // 3561117130
 	};
@@ -240,63 +243,77 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 #endif
 	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_Gravity = { "Gravity", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, Gravity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Gravity_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Gravity_MetaData)) };
 #if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_GravityScale_MetaData[] = {
+		{ "Category", "Physics" },
+		{ "ModuleRelativePath", "BulletComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_GravityScale = { "GravityScale", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, GravityScale), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_GravityScale_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_GravityScale_MetaData)) };
+#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_Mass_MetaData[] = {
-		{ "Category", "Physics|Material" },
+		{ "Category", "Physics" },
 		{ "ModuleRelativePath", "BulletComponent.h" },
 	};
 #endif
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_Mass = { "Mass", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, Mass), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Mass_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Mass_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_Velocity_MetaData[] = {
-		{ "Category", "Physics|Speed" },
-		{ "ModuleRelativePath", "BulletComponent.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_Velocity = { "Velocity", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, Velocity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Velocity_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Velocity_MetaData)) };
-#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed_MetaData[] = {
-		{ "Category", "Physics|Speed" },
-		{ "ModuleRelativePath", "BulletComponent.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed = { "InitialSpeed", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, InitialSpeed), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed_MetaData)) };
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResist_MetaData[] = {
-		{ "Category", "Physics|Resistance" },
+		{ "Category", "Physics" },
 		{ "Comment", "// \xd1\x81\xd1\x82\xd0\xb0\xd1\x80\xd1\x82\xd0\xbe\xd0\xb2\xd0\xb0\xd1\x8f \xd0\xa1\xd0\xba\xd0\xbe\xd1\x80\xd0\xbe\xd1\x81\xd1\x82\xd1\x8c \xd1\x81\xd0\xbd\xd0\xb0\xd1\x80\xd1\x8f\xd0\xb4\xd0\xb0 (\xd0\xb7\xd0\xb0\xd0\xb2\xd0\xb8\xd1\x81\xd0\xb8\xd1\x82 \xd0\xbe\xd1\x82 \xd1\x82\xd0\xb8\xd0\xbf\xd0\xb0 \xd0\xbe\xd1\x80\xd1\x83\xd0\xb4\xd0\xb8\xd1\x8f, \xd0\xb8\xd0\xb7 \xd0\xba\xd0\xbe\xd1\x82\xd0\xbe\xd1\x80. \xd1\x81\xd1\x82\xd1\x80\xd0\xb5\xd0\xbb\xd1\x8f\xd1\x8e\xd1\x82)\n" },
 		{ "ModuleRelativePath", "BulletComponent.h" },
 		{ "ToolTip", "\xd1\x81\xd1\x82\xd0\xb0\xd1\x80\xd1\x82\xd0\xbe\xd0\xb2\xd0\xb0\xd1\x8f \xd0\xa1\xd0\xba\xd0\xbe\xd1\x80\xd0\xbe\xd1\x81\xd1\x82\xd1\x8c \xd1\x81\xd0\xbd\xd0\xb0\xd1\x80\xd1\x8f\xd0\xb4\xd0\xb0 (\xd0\xb7\xd0\xb0\xd0\xb2\xd0\xb8\xd1\x81\xd0\xb8\xd1\x82 \xd0\xbe\xd1\x82 \xd1\x82\xd0\xb8\xd0\xbf\xd0\xb0 \xd0\xbe\xd1\x80\xd1\x83\xd0\xb4\xd0\xb8\xd1\x8f, \xd0\xb8\xd0\xb7 \xd0\xba\xd0\xbe\xd1\x82\xd0\xbe\xd1\x80. \xd1\x81\xd1\x82\xd1\x80\xd0\xb5\xd0\xbb\xd1\x8f\xd1\x8e\xd1\x82)" },
 	};
 #endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResist = { "AirResist", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, AirResist), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResist_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResist_MetaData)) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed = { "InitialSpeed", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, InitialSpeed), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind_MetaData[] = {
-		{ "Category", "Physics|Resistance" },
-		{ "Comment", "// \xd0\xa1\xd0\xbe\xd0\xbf\xd1\x80\xd0\xbe\xd1\x82\xd0\xb8\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd0\xb5 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd1\x83\xd1\x85\xd0\xb0\n" },
-		{ "ModuleRelativePath", "BulletComponent.h" },
-		{ "ToolTip", "\xd0\xa1\xd0\xbe\xd0\xbf\xd1\x80\xd0\xbe\xd1\x82\xd0\xb8\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd0\xb5 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd1\x83\xd1\x85\xd0\xb0" },
-	};
-#endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind = { "Wind", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, Wind), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind_MetaData)) };
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_Sk_MetaData[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind_MetaData[] = {
 		{ "Category", "Physics|Resistance" },
 		{ "Comment", "// \xd0\x92\xd0\xb5\xd1\x82\xd0\xb5\xd1\x80\n" },
 		{ "ModuleRelativePath", "BulletComponent.h" },
 		{ "ToolTip", "\xd0\x92\xd0\xb5\xd1\x82\xd0\xb5\xd1\x80" },
 	};
 #endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_Sk = { "Sk", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, Sk), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Sk_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Sk_MetaData)) };
+	void Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind_SetBit(void* Obj)
+	{
+		((UBulletComponent*)Obj)->EnableWind = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind = { "EnableWind", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UBulletComponent), &Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind_SetBit, METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind_MetaData[] = {
+		{ "Category", "Physics|Resistance" },
+		{ "ModuleRelativePath", "BulletComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind = { "Wind", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, Wind), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResistance_MetaData[] = {
+		{ "Category", "Physics|Resistance" },
+		{ "Comment", "// \xd0\xa1\xd0\xbe\xd0\xbf\xd1\x80\xd0\xbe\xd1\x82\xd0\xb8\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd0\xb5 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd1\x83\xd1\x85\xd0\xb0\n" },
+		{ "ModuleRelativePath", "BulletComponent.h" },
+		{ "ToolTip", "\xd0\xa1\xd0\xbe\xd0\xbf\xd1\x80\xd0\xbe\xd1\x82\xd0\xb8\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd0\xb5 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd1\x83\xd1\x85\xd0\xb0" },
+	};
+#endif
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResistance = { "AirResistance", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, AirResistance), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResistance_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResistance_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_SquareCoef_MetaData[] = {
+		{ "Category", "Physics|Resistance" },
+		{ "Comment", "// \xd0\x9a\xd0\xbe\xd1\x8d\xd1\x84. \xd0\xbf\xd0\xbb\xd0\xbe\xd1\x89\xd0\xb0\xd0\xb4\xd0\xb8 (\xd0\xbd\xd0\xb0 \xd1\x81\xd0\xba\xd0\xbe\xd0\xbb\xd1\x8c\xd0\xba\xd0\xbe \xd1\x81\xd0\xb8\xd0\xbb\xd1\x8c\xd0\xbd\xd0\xbe \xd0\xb2\xd0\xb5\xd1\x82\xd0\xb5\xd1\x80 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd0\xb5\xd0\xb9\xd1\x81\xd1\x82\xd0\xb2\xd1\x83\xd0\xb5\xd1\x82 \xd0\xbd\xd0\xb0 \xd0\xbe\xd0\xb1\xd1\x8a\xd0\xb5\xd0\xba\xd1\x82)\n" },
+		{ "ModuleRelativePath", "BulletComponent.h" },
+		{ "ToolTip", "\xd0\x9a\xd0\xbe\xd1\x8d\xd1\x84. \xd0\xbf\xd0\xbb\xd0\xbe\xd1\x89\xd0\xb0\xd0\xb4\xd0\xb8 (\xd0\xbd\xd0\xb0 \xd1\x81\xd0\xba\xd0\xbe\xd0\xbb\xd1\x8c\xd0\xba\xd0\xbe \xd1\x81\xd0\xb8\xd0\xbb\xd1\x8c\xd0\xbd\xd0\xbe \xd0\xb2\xd0\xb5\xd1\x82\xd0\xb5\xd1\x80 \xd0\xb2\xd0\xbe\xd0\xb7\xd0\xb4\xd0\xb5\xd0\xb9\xd1\x81\xd1\x82\xd0\xb2\xd1\x83\xd0\xb5\xd1\x82 \xd0\xbd\xd0\xb0 \xd0\xbe\xd0\xb1\xd1\x8a\xd0\xb5\xd0\xba\xd1\x82)" },
+	};
+#endif
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UBulletComponent_Statics::NewProp_SquareCoef = { "SquareCoef", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UBulletComponent, SquareCoef), METADATA_PARAMS(Z_Construct_UClass_UBulletComponent_Statics::NewProp_SquareCoef_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UBulletComponent_Statics::NewProp_SquareCoef_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UBulletComponent_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableLog,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableGravity,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_Gravity,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_GravityScale,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_Mass,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_Velocity,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_InitialSpeed,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResist,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableWind,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_Wind,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_Sk,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_AirResistance,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UBulletComponent_Statics::NewProp_SquareCoef,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UBulletComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UBulletComponent>::IsAbstract,
@@ -325,7 +342,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UBulletComponent, 2984929115);
+	IMPLEMENT_CLASS(UBulletComponent, 719063976);
 	template<> BULLETPHYSICS_API UClass* StaticClass<UBulletComponent>()
 	{
 		return UBulletComponent::StaticClass();

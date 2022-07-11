@@ -19,6 +19,13 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 	UPackage* Z_Construct_UPackage__Script_BulletPhysics();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 // End Cross Module References
+	DEFINE_FUNCTION(UBulletComponent::execDrawTrajectory)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->DrawTrajectory();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UBulletComponent::execshowLog)
 	{
 		P_GET_PROPERTY(FFloatProperty,Z_Param_DeltaTime);
@@ -40,6 +47,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		UClass* Class = UBulletComponent::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "AddResistance", &UBulletComponent::execAddResistance },
+			{ "DrawTrajectory", &UBulletComponent::execDrawTrajectory },
 			{ "showLog", &UBulletComponent::execshowLog },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -75,6 +83,28 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UBulletComponent_DrawTrajectory_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBulletComponent_DrawTrajectory_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "BulletComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UBulletComponent_DrawTrajectory_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBulletComponent, nullptr, "DrawTrajectory", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBulletComponent_DrawTrajectory_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBulletComponent_DrawTrajectory_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UBulletComponent_DrawTrajectory()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UBulletComponent_DrawTrajectory_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -169,6 +199,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UBulletComponent_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UBulletComponent_AddResistance, "AddResistance" }, // 2649586305
+		{ &Z_Construct_UFunction_UBulletComponent_DrawTrajectory, "DrawTrajectory" }, // 346492340
 		{ &Z_Construct_UFunction_UBulletComponent_showLog, "showLog" }, // 3561117130
 	};
 #if WITH_METADATA
@@ -294,7 +325,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UBulletComponent, 1376770372);
+	IMPLEMENT_CLASS(UBulletComponent, 2984929115);
 	template<> BULLETPHYSICS_API UClass* StaticClass<UBulletComponent>()
 	{
 		return UBulletComponent::StaticClass();

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "DrawDebugHelpers.h"
 #include "BulletComponent.generated.h"
 
 #define GRAVITY -9.8
@@ -21,6 +22,9 @@ class BULLETPHYSICS_API UBulletComponent : public UActorComponent
 
     FVector Force;
     FVector Impulse;
+    
+    FVector Start;
+    FVector End;
     
 public:	
 	// Sets default values for this component's properties
@@ -72,4 +76,7 @@ public:
 
     UFUNCTION()
     void showLog(float DeltaTime);
+    
+    UFUNCTION()
+    void DrawTrajectory();
 };

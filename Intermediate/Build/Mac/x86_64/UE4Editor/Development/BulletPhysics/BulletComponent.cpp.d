@@ -2655,4 +2655,5 @@
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Source/BulletPhysics/BulletComponent.cpp \
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Intermediate/Build/Mac/x86_64/UE4Editor/Development/BulletPhysics/Definitions.BulletPhysics.h \
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Source/BulletPhysics/BulletComponent.h \
+  /Users/Shared/Epic\ Games/UE_4.27/Engine/Source/Runtime/Engine/Public/DrawDebugHelpers.h \
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/BulletPhysics/BulletComponent.generated.h

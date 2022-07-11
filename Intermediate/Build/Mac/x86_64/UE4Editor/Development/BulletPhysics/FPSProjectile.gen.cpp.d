@@ -2666,5 +2666,6 @@
   /Users/Shared/Epic\ Games/UE_4.27/Engine/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/Engine/MovementComponent.generated.h \
   /Users/Shared/Epic\ Games/UE_4.27/Engine/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/Engine/ProjectileMovementComponent.generated.h \
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Source/BulletPhysics/BulletComponent.h \
+  /Users/Shared/Epic\ Games/UE_4.27/Engine/Source/Runtime/Engine/Public/DrawDebugHelpers.h \
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/BulletPhysics/BulletComponent.generated.h \
   /Users/dmitry/Documents/Unreal\ Projects/BulletPhysics/Intermediate/Build/Mac/x86_64/UE4Editor/Inc/BulletPhysics/FPSProjectile.generated.h

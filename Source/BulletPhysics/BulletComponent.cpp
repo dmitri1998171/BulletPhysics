@@ -49,12 +49,15 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
         Force.Set(X, Y, Z);
         
         isFired = false;
+        Start = Parent->GetActorLocation();
     }
     
     AddResistance(DeltaTime);
 
     PlayerPos = Parent->GetActorLocation();
     Parent->SetActorLocation(PlayerPos + Force);
+    
+    DrawTrajectory();
     
     showLog(DeltaTime);
 }
@@ -82,4 +85,10 @@ void UBulletComponent::showLog(float DeltaTime) {
         
         GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("pos: %s"), *PlayerPos.ToString()));
     }
+}
+
+void UBulletComponent::DrawTrajectory() {
+    End = PlayerPos;
+    DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+    Start = End;
 }

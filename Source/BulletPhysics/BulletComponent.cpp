@@ -4,10 +4,7 @@
 #include "BulletComponent.h"
 
 // Sets default values for this component's properties
-UBulletComponent::UBulletComponent()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+UBulletComponent::UBulletComponent() {
 	PrimaryComponentTick.bCanEverTick = true;
 
     isFired = true;
@@ -16,13 +13,14 @@ UBulletComponent::UBulletComponent()
     EnableGravity = true;
     Gravity = FVector(0, 0, GRAVITY);
     
-    Mass = 50;
+/*   Система СИ: кг-м-с   */
+    Mass = 0.009;
     
-    InitialSpeed = 1;
+    InitialSpeed = 500;
     
     AirResist = 1;
     Wind = 1;
-    Sk = 0;
+    Sk = 1;
     
     Parent = GetOwner();
     if (Parent != nullptr) {
@@ -33,23 +31,20 @@ UBulletComponent::UBulletComponent()
 
 
 // Called when the game starts
-void UBulletComponent::BeginPlay()
-{
+void UBulletComponent::BeginPlay() {
 	Super::BeginPlay();
-    
 }
 
 
 // Called every frame
-void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-    if(isFired)
-    {
-        float X = Mass * InitialSpeed * Velocity.X;
-        float Y = Mass * InitialSpeed * Velocity.Y;
-        float Z = Mass * InitialSpeed * Velocity.Z;
+//    Здесь костыль, потому что изменение Velocity(выбор направления) происходит после вызова BeginPlay()
+    if(isFired) {
+        float X = Mass * InitialSpeed * Velocity.X * DeltaTime;
+        float Y = Mass * InitialSpeed * Velocity.Y * DeltaTime;
+        float Z = Mass * InitialSpeed * Velocity.Z * DeltaTime;
         
         Force.Set(X, Y, Z);
         
@@ -67,9 +62,8 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 void UBulletComponent::AddResistance(float DeltaTime) {
     float value = ((AirResist + Wind) * Sk);
     
-    if (!EnableGravity) {
+    if (!EnableGravity)
         Gravity = FVector(0, 0, 0);
-    }
     
     Force.X += (Gravity.X + value) * DeltaTime;
     Force.Y += (Gravity.Y + value) * DeltaTime;

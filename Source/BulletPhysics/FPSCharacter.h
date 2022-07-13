@@ -17,7 +17,21 @@ class BULLETPHYSICS_API AFPSCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AFPSCharacter();
-
+    
+    FVector LaunchDirection;
+    FVector CameraLocation;
+    FRotator CameraRotation;
+    FRotator MuzzleRotation;
+    
+    FVector start;
+    FVector end;
+    
+    FHitResult OutHit;
+    
+    FCollisionQueryParams CollisionParams;
+    
+    bool isHit;
+    
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

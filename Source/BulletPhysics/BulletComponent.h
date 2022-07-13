@@ -26,6 +26,9 @@ class BULLETPHYSICS_API UBulletComponent : public UActorComponent
     FVector Start;
     FVector End;
     
+    FVector Start_1;
+    FVector End_1;
+    
 public:	
 	// Sets default values for this component's properties
 	UBulletComponent();

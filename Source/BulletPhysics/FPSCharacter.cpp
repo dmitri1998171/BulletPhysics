@@ -22,6 +22,7 @@ AFPSCharacter::AFPSCharacter()
     // Enable the pawn to control camera rotation.
     FPSCameraComponent->bUsePawnControlRotation = true;
     
+    start = GetActorLocation();
 }
 
 // Called when the game starts or when spawned
@@ -36,6 +37,25 @@ void AFPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    GetActorEyesViewPoint(CameraLocation, CameraRotation);
+    MuzzleRotation = CameraRotation;
+    MuzzleRotation.Pitch += 2.5;    // Чтоб снаряд пролетал через прицел
+    
+    LaunchDirection = MuzzleRotation.Vector();
+        
+// Вывод луча
+    start = GetActorLocation();
+    end = start + (LaunchDirection * 1000);
+    DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
+    
+// Проверка столкновения с лучом
+    isHit = GetWorld()->LineTraceSingleByChannel(OutHit, start, end, ECC_Visibility, CollisionParams);
+    
+    if(isHit) {
+        GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s"), *OutHit.GetActor()->GetName()));
+        GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Impact Point: %s"), *OutHit.ImpactPoint.ToString()));
+        GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Yellow, FString::Printf(TEXT("Normal Point: %s"), *OutHit.ImpactNormal.ToString()));
+    }
 }
 
 // Called to bind functionality to input
@@ -74,20 +94,11 @@ void AFPSCharacter::Fire()
     // Attempt to fire a projectile.
     if (ProjectileClass)
     {
-        // Get the camera transform.
-        FVector CameraLocation;
-        FRotator CameraRotation;
-        GetActorEyesViewPoint(CameraLocation, CameraRotation);
-
-        // Set MuzzleOffset to spawn projectiles slightly in front of the camera.
+        
         MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
 
         // Transform MuzzleOffset from camera space to world space.
         FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
-
-        // Skew the aim to be slightly upwards.
-        FRotator MuzzleRotation = CameraRotation;
-        MuzzleRotation.Pitch += 2.5;    // Чтоб снаряд пролетал через прицел
 
         UWorld* World = GetWorld();
         if (World)
@@ -101,7 +112,7 @@ void AFPSCharacter::Fire()
             if (Projectile)
             {
                 // Set the projectile's initial trajectory.
-                FVector LaunchDirection = MuzzleRotation.Vector();
+                LaunchDirection = MuzzleRotation.Vector();
                 Projectile->FireInDirection(LaunchDirection);
             }
         }

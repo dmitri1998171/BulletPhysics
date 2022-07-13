@@ -48,9 +48,9 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
         float X = Mass * InitialSpeed * Velocity.X * 10;
         float Y = Mass * InitialSpeed * Velocity.Y * 10;
         float Z = Mass * InitialSpeed * Velocity.Z * 10;
-        
+
         Force.Set(X, Y, Z);
-        
+
         isFired = false;
         Start = Parent->GetActorLocation();
     }
@@ -60,6 +60,7 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
     PlayerPos = Parent->GetActorLocation();
     Parent->SetActorLocation(PlayerPos + Force);
     
+//    DrawDebugLine(GetWorld(), PlayerPos, Velocity * 10000, FColor::Red, false, 1, 0, 1);
     DrawTrajectory();
     
     showLog(DeltaTime);
@@ -97,6 +98,6 @@ void UBulletComponent::showLog(float DeltaTime) {
 
 void UBulletComponent::DrawTrajectory() {
     End = PlayerPos;
-    DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+    DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 5);
     Start = End;
 }

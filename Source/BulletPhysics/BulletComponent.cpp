@@ -8,7 +8,7 @@ UBulletComponent::UBulletComponent() {
 	PrimaryComponentTick.bCanEverTick = true;
 
     isFired = true;
-    EnableLog = true;
+    EnableLog = false;
     
     EnableGravity = true;
     Gravity = FVector(0, 0, GRAVITY);
@@ -60,8 +60,7 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
     PlayerPos = Parent->GetActorLocation();
     Parent->SetActorLocation(PlayerPos + Force);
     
-//    DrawDebugLine(GetWorld(), PlayerPos, Velocity * 10000, FColor::Red, false, 1, 0, 1);
-    DrawTrajectory();
+//    DrawTrajectory();
     
     showLog(DeltaTime);
 }

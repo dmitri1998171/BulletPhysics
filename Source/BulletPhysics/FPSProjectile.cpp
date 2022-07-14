@@ -69,6 +69,7 @@ void AFPSProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    CheckCollision(DeltaTime);
 }
 
 // Function that initializes the projectile's velocity in the shoot direction.
@@ -82,9 +83,24 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor
 {
     if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
     {
-        OtherComponent->AddForce();
         OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 1.0f, Hit.ImpactPoint);
     }
 
     Destroy();
+}
+
+bool AFPSProjectile::CheckCollision(float DeltaTime) {
+    Start = GetActorLocation() + (ProjectileMovementComponent->Velocity * CollisionComponent->GetUnscaledSphereRadius());   // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд
+    End = Start + ProjectileMovementComponent->Force * DeltaTime * 1000;
+        
+    isHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
+    
+    DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, 2, 0, 5);
+    
+    if(isHit && OutHit.GetActor() != this) {
+        GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Magenta, FString::Printf(TEXT("You are hitting: %s"), *OutHit.GetActor()->GetName()));
+        return true;
+    }
+    
+    return false;
 }

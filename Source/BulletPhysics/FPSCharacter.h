@@ -27,7 +27,6 @@ public:
     FVector end;
     
     FHitResult OutHit;
-    
     FCollisionQueryParams CollisionParams;
     
     bool isHit;

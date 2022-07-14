@@ -14,6 +14,14 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
     
+    bool isHit;
+    
+    FVector Start;
+    FVector End;
+    
+    FHitResult OutHit;
+    FCollisionQueryParams CollisionParams;
+    
 public:	
 	// Sets default values for this actor's properties
 	AFPSProjectile();
@@ -50,4 +58,7 @@ public:
     // Function that is called when the projectile hits something.
     UFUNCTION()
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+    
+    UFUNCTION()
+    bool CheckCollision(float DeltaTime);
 };

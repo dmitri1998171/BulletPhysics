@@ -23,7 +23,7 @@ UBulletComponent::UBulletComponent() {
     Wind = FVector(1, 0, 0);
     
     AirResistance = 1;
-    SquareCoef = 1;
+    SquareCoef = FVector(1, 1, 0);
 
     Parent = GetOwner();
     if (Parent != nullptr) {
@@ -73,11 +73,8 @@ void UBulletComponent::AddResistance(float DeltaTime) {
     if (EnableWind)
         Force -= Wind * DeltaTime;
     
-    float value = AirResistance * SquareCoef;
-
-    Force.X -= value * Velocity.X * DeltaTime;
-    Force.Y -= value * Velocity.Y * DeltaTime;
-    Force.Z -= value * Velocity.Z * DeltaTime;
+    SquareCoef *= AirResistance;
+    Force -= SquareCoef * Velocity * DeltaTime;
 }
 
 void UBulletComponent::showLog(float DeltaTime) {

@@ -81,7 +81,7 @@ public:
     
     // Коэф. площади (на сколько сильно ветер воздействует на объект)
     UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
-    float SquareCoef;
+    FVector SquareCoef;     // не равна 0 !!!
     
         
     UFUNCTION()

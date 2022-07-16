@@ -71,7 +71,11 @@ void AFPSProjectile::Tick(float DeltaTime)
 
     SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
     
-    CollisionDetection(DeltaTime);
+    DrawDebugSphere(GetWorld(), GetActorLocation(), 300, 10, FColor::Magenta, false, DeltaTime* 1.5, 0, 3);
+    
+    
+    
+//    CollisionDetection(DeltaTime);
 
 }
 
@@ -113,3 +117,13 @@ void AFPSProjectile::CollisionDetection(float DeltaTime) {
         End += ProjectileMovementComponent->Force;
     }
 }
+
+//void AFPSProjectile::IterateAllSceneObjects() {
+//    for(TObjectIterator<UClass> It; It; ++It)
+//     {
+//         if(It->IsChildOf(USomeAwesomeClass::StaticClass()) && !It->HasAnyClassFlags(CLASS_Abstract))
+//         {
+//             Subclasses.Add(*It);
+//         }
+//     }
+//}

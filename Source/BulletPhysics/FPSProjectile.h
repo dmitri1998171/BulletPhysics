@@ -14,14 +14,14 @@ UCLASS()
 class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
-    
-    bool isHit;
+        
+//    TArray<UClass> Subclasses;
     
     FVector tmpForce;
     
     FVector Start;
     FVector End;
-    
+        
     FHitResult OutHit;
     FCollisionQueryParams CollisionParams;
     

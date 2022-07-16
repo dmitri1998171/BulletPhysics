@@ -25,12 +25,12 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UMaterialInstanceDynamic_NoRegister();
 // End Cross Module References
-	DEFINE_FUNCTION(AFPSCharacter::execDrawFutureTrajectory)
+	DEFINE_FUNCTION(AFPSCharacter::execCollisionDetection)
 	{
 		P_GET_PROPERTY(FFloatProperty,Z_Param_DeltaTime);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->DrawFutureTrajectory(Z_Param_DeltaTime);
+		P_THIS->CollisionDetection(Z_Param_DeltaTime);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(AFPSCharacter::execFire)
@@ -60,16 +60,16 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 	{
 		UClass* Class = AFPSCharacter::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
-			{ "DrawFutureTrajectory", &AFPSCharacter::execDrawFutureTrajectory },
+			{ "CollisionDetection", &AFPSCharacter::execCollisionDetection },
 			{ "Fire", &AFPSCharacter::execFire },
 			{ "MoveForward", &AFPSCharacter::execMoveForward },
 			{ "MoveRight", &AFPSCharacter::execMoveRight },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
-	struct Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics
+	struct Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics
 	{
-		struct FPSCharacter_eventDrawFutureTrajectory_Parms
+		struct FPSCharacter_eventCollisionDetection_Parms
 		{
 			float DeltaTime;
 		};
@@ -80,22 +80,22 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::NewProp_DeltaTime = { "DeltaTime", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSCharacter_eventDrawFutureTrajectory_Parms, DeltaTime), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::NewProp_DeltaTime,
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::NewProp_DeltaTime = { "DeltaTime", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSCharacter_eventCollisionDetection_Parms, DeltaTime), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::NewProp_DeltaTime,
 	};
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::Function_MetaDataParams[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::Function_MetaDataParams[] = {
 		{ "ModuleRelativePath", "FPSCharacter.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSCharacter, nullptr, "DrawFutureTrajectory", nullptr, nullptr, sizeof(FPSCharacter_eventDrawFutureTrajectory_Parms), Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory()
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSCharacter, nullptr, "CollisionDetection", nullptr, nullptr, sizeof(FPSCharacter_eventCollisionDetection_Parms), Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AFPSCharacter_CollisionDetection()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::FuncParams);
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSCharacter_CollisionDetection_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -235,7 +235,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_BulletPhysics,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AFPSCharacter_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory, "DrawFutureTrajectory" }, // 1139004524
+		{ &Z_Construct_UFunction_AFPSCharacter_CollisionDetection, "CollisionDetection" }, // 3945530118
 		{ &Z_Construct_UFunction_AFPSCharacter_Fire, "Fire" }, // 1415590024
 		{ &Z_Construct_UFunction_AFPSCharacter_MoveForward, "MoveForward" }, // 1261208855
 		{ &Z_Construct_UFunction_AFPSCharacter_MoveRight, "MoveRight" }, // 798508334
@@ -339,7 +339,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AFPSCharacter, 2908227402);
+	IMPLEMENT_CLASS(AFPSCharacter, 1831348682);
 	template<> BULLETPHYSICS_API UClass* StaticClass<AFPSCharacter>()
 	{
 		return AFPSCharacter::StaticClass();

@@ -16,7 +16,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define BulletPhysics_Source_BulletPhysics_FPSCharacter_h_16_SPARSE_DATA
 #define BulletPhysics_Source_BulletPhysics_FPSCharacter_h_16_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execDrawFutureTrajectory); \
+	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execFire); \
 	DECLARE_FUNCTION(execMoveRight); \
 	DECLARE_FUNCTION(execMoveForward);
@@ -24,7 +24,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define BulletPhysics_Source_BulletPhysics_FPSCharacter_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execDrawFutureTrajectory); \
+	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execFire); \
 	DECLARE_FUNCTION(execMoveRight); \
 	DECLARE_FUNCTION(execMoveForward);

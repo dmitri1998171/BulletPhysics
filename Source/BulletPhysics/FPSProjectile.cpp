@@ -71,7 +71,8 @@ void AFPSProjectile::Tick(float DeltaTime)
 
     SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
     
-    CheckCollision(DeltaTime);
+    CollisionDetection(DeltaTime);
+
 }
 
 // Function that initializes the projectile's velocity in the shoot direction.
@@ -85,26 +86,30 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor
 {
     if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
     {
-        OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 1.0f, Hit.ImpactPoint);
+        OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity / 100, Hit.ImpactPoint);
     }
 
     Destroy();
 }
 
-bool AFPSProjectile::CheckCollision(float DeltaTime) {
-    Start = GetActorLocation() + (ProjectileMovementComponent->Velocity * CollisionComponent->GetUnscaledSphereRadius());   // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд
-    End = Start + ProjectileMovementComponent->Force + (ProjectileMovementComponent->Velocity * 100);// * DeltaTime * 1000;
+void AFPSProjectile::CollisionDetection(float DeltaTime) {
+//    UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
+    
+    Start = GetActorLocation() + (ProjectileMovementComponent->Velocity * CollisionComponent->GetScaledSphereRadius());   // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд;
+    End = Start + ProjectileMovementComponent->Force;
+    
+    for (int i = 0; i < 1000; i++) {
+        // Отрисовка линии
+        DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, DeltaTime * 1.5, 0, CollisionComponent->GetScaledSphereRadius());
         
-    UE_LOG(LogTemp, Error, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
-    
-    isHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
-    
-    DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, 2, 0, 5);
-    
-    if(isHit && OutHit.GetActor() != this) {
-        GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Magenta, FString::Printf(TEXT("You are hitting: %s"), *OutHit.GetActor()->GetName()));
-        return true;
+        if(GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams)) {
+            if(OutHit.GetActor() != this) {
+                GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Yellow, FString::Printf(TEXT("You will hit: %s"), *OutHit.GetActor()->GetName()));
+//                UE_LOG(LogTemp, Warning, TEXT("Collision detected: %s"), *OutHit.GetActor()->GetName());
+            }
+        }
+        
+        Start = End;
+        End += ProjectileMovementComponent->Force;
     }
-    
-    return false;
 }

@@ -31,9 +31,7 @@ public:
             
     FHitResult OutHit;
     FCollisionQueryParams CollisionParams;
-    
-    bool isHit;
-    
+        
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -83,5 +81,5 @@ public:
     UMaterialInstanceDynamic* ProjectileMaterialInstance;
     
     UFUNCTION()
-    void DrawFutureTrajectory(float DeltaTime);
+    void CollisionDetection(float DeltaTime);
 };

@@ -38,6 +38,7 @@ public:
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
     FVector Force;
+    float ForceScale;   // Для компенсации умножения на вектор направления (Velocity)
     
     UPROPERTY(EditAnywhere, Category = Log)
     bool EnableLog;
@@ -57,12 +58,12 @@ public:
     float Mass;
 
     
-    FVector Velocity;
-    
     // стартовая Скорость снаряда (зависит от типа орудия, из котор. стреляют)
     UPROPERTY(EditAnywhere, Category = "Physics")
     float InitialSpeed;
     
+    FVector Velocity;
+
     
     // Ветер
     UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
@@ -80,7 +81,9 @@ public:
     UPROPERTY(EditAnywhere, Category = "Physics\|Resistance")
     FVector SquareCoef;     // не равна 0 !!!
     
-        
+    UFUNCTION()
+    void CalcForce();
+    
     UFUNCTION()
     void AddResistance(float DeltaTime);
 

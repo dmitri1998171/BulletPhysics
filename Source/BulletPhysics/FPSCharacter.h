@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "FPSProjectile.h"
+#include "BulletComponent.h"
 #include "FPSCharacter.generated.h"
 
 UCLASS()
@@ -23,9 +24,11 @@ public:
     FRotator CameraRotation;
     FRotator MuzzleRotation;
     
-    FVector start;
-    FVector end;
+    FVector tmpForce;
     
+    FVector Start;
+    FVector End;
+            
     FHitResult OutHit;
     FCollisionQueryParams CollisionParams;
     
@@ -67,6 +70,10 @@ public:
     UPROPERTY(EditDefaultsOnly, Category = Projectile)
     TSubclassOf<class AFPSProjectile> ProjectileClass;
     
+    // Projectile movement component.
+    UPROPERTY(VisibleAnywhere, Category = Movement)
+    UBulletComponent* ProjectileMovementComponent;
+    
     // Projectile mesh
     UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
     UStaticMeshComponent* ProjectileMeshComponent;
@@ -74,4 +81,7 @@ public:
     // Projectile material
     UPROPERTY(VisibleDefaultsOnly, Category = Movement)
     UMaterialInstanceDynamic* ProjectileMaterialInstance;
+    
+    UFUNCTION()
+    void DrawFutureTrajectory(float DeltaTime);
 };

@@ -13,6 +13,7 @@ UBulletComponent::UBulletComponent() {
     EnableGravity = true;
     Gravity = FVector(0, 0, GRAVITY);
     GravityScale = 0.1;
+    ForceScale = 10;
     
 /*   Система СИ: кг-м-с   */
     Mass = 0.004;
@@ -45,24 +46,20 @@ void UBulletComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 //    Здесь костыль, потому что изменение Velocity(выбор направления) происходит после вызова BeginPlay()
     if(isFired) {
-        float X = Mass * InitialSpeed * Velocity.X * 10;
-        float Y = Mass * InitialSpeed * Velocity.Y * 10;
-        float Z = Mass * InitialSpeed * Velocity.Z * 10;
-
-        Force.Set(X, Y, Z);
-
         isFired = false;
+        CalcForce();
         Start = Parent->GetActorLocation();
     }
     
     AddResistance(DeltaTime);
-
-    PlayerPos = Parent->GetActorLocation();
-    Parent->SetActorLocation(PlayerPos + Force);
     
 //    DrawTrajectory();
-    
     showLog(DeltaTime);
+}
+
+void UBulletComponent::CalcForce() {
+    Force = Velocity;
+    Force *= Mass * InitialSpeed * ForceScale;
 }
 
 void UBulletComponent::AddResistance(float DeltaTime) {

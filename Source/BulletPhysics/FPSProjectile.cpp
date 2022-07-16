@@ -8,7 +8,7 @@ AFPSProjectile::AFPSProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+    
     if(!RootComponent)
     {
         RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
@@ -69,6 +69,8 @@ void AFPSProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
+    
     CheckCollision(DeltaTime);
 }
 
@@ -91,8 +93,10 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor
 
 bool AFPSProjectile::CheckCollision(float DeltaTime) {
     Start = GetActorLocation() + (ProjectileMovementComponent->Velocity * CollisionComponent->GetUnscaledSphereRadius());   // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд
-    End = Start + ProjectileMovementComponent->Force * DeltaTime * 1000;
+    End = Start + ProjectileMovementComponent->Force + (ProjectileMovementComponent->Velocity * 100);// * DeltaTime * 1000;
         
+    UE_LOG(LogTemp, Error, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
+    
     isHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
     
     DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, 2, 0, 5);

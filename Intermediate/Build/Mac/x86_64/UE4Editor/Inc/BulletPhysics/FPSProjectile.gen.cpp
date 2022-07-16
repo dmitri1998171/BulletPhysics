@@ -228,10 +228,10 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFPSProjectile_Statics::NewProp_ProjectileMovementComponent_MetaData[] = {
 		{ "Category", "Movement" },
-		{ "Comment", "// Projectile movement component.\n//    UProjectileMovementComponent* ProjectileMovementComponent;\n//    UProjectileComponent* ProjectileMovementComponent;\n" },
+		{ "Comment", "// Projectile movement component.\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "FPSProjectile.h" },
-		{ "ToolTip", "Projectile movement component.\n   UProjectileMovementComponent* ProjectileMovementComponent;\n   UProjectileComponent* ProjectileMovementComponent;" },
+		{ "ToolTip", "Projectile movement component." },
 	};
 #endif
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AFPSProjectile_Statics::NewProp_ProjectileMovementComponent = { "ProjectileMovementComponent", nullptr, (EPropertyFlags)0x00100000000a0009, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AFPSProjectile, ProjectileMovementComponent), Z_Construct_UClass_UBulletComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AFPSProjectile_Statics::NewProp_ProjectileMovementComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFPSProjectile_Statics::NewProp_ProjectileMovementComponent_MetaData)) };
@@ -287,7 +287,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AFPSProjectile, 3077677203);
+	IMPLEMENT_CLASS(AFPSProjectile, 547439587);
 	template<> BULLETPHYSICS_API UClass* StaticClass<AFPSProjectile>()
 	{
 		return AFPSProjectile::StaticClass();

@@ -7,6 +7,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "BulletComponent.h"
+#include "Components/LineBatchComponent.h"
 #include "FPSProjectile.generated.h"
 
 UCLASS()
@@ -40,8 +41,6 @@ public:
     
     // Projectile movement component.
     UPROPERTY(VisibleAnywhere, Category = Movement)
-//    UProjectileMovementComponent* ProjectileMovementComponent;
-//    UProjectileComponent* ProjectileMovementComponent;
     UBulletComponent* ProjectileMovementComponent;
     
     // Projectile mesh

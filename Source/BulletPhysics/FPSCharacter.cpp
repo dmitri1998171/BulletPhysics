@@ -8,7 +8,13 @@ AFPSCharacter::AFPSCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+    
+    if(!ProjectileMovementComponent)
+    {
+        // Use this component to drive this projectile's movement.
+        ProjectileMovementComponent = CreateDefaultSubobject<UBulletComponent>(TEXT("ProjectileMovementComponent"));
+    }
+    
     // Create a first person camera component.
     FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
     check(FPSCameraComponent != nullptr);
@@ -21,8 +27,6 @@ AFPSCharacter::AFPSCharacter()
 
     // Enable the pawn to control camera rotation.
     FPSCameraComponent->bUsePawnControlRotation = true;
-    
-    start = GetActorLocation();
 }
 
 // Called when the game starts or when spawned
@@ -42,14 +46,12 @@ void AFPSCharacter::Tick(float DeltaTime)
     MuzzleRotation.Pitch += 2.5;    // Чтоб снаряд пролетал через прицел
     
     LaunchDirection = MuzzleRotation.Vector();
-        
+    
 // Вывод луча
-//    start = GetActorLocation();
-//    end = start + (LaunchDirection * 1000);
-//    DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
+    DrawFutureTrajectory(DeltaTime);
     
 // Проверка столкновения с лучом
-//    isHit = GetWorld()->LineTraceSingleByChannel(OutHit, start, end, ECC_Visibility, CollisionParams);
+//    isHit = GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams);
 //
 //    if(isHit) {
 //        GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s"), *OutHit.GetActor()->GetName()));
@@ -94,7 +96,6 @@ void AFPSCharacter::Fire()
     // Attempt to fire a projectile.
     if (ProjectileClass)
     {
-        
         MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
 
         // Transform MuzzleOffset from camera space to world space.
@@ -112,9 +113,27 @@ void AFPSCharacter::Fire()
             if (Projectile)
             {
                 // Set the projectile's initial trajectory.
-                LaunchDirection = MuzzleRotation.Vector();
                 Projectile->FireInDirection(LaunchDirection);
             }
         }
+    }
+}
+
+void AFPSCharacter::DrawFutureTrajectory(float DeltaTime) {
+    ProjectileMovementComponent->Velocity = LaunchDirection;
+    ProjectileMovementComponent->CalcForce();
+    ProjectileMovementComponent->AddResistance(DeltaTime);
+    
+//    UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
+    
+    Start = GetActorLocation();
+    End = Start + ProjectileMovementComponent->Force;
+    
+    for (int i = 0; i < 1000; i++) {
+        DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, DeltaTime * 1.5, 0, 5);
+        
+        Start = End;
+        End += ProjectileMovementComponent->Force;
+        ProjectileMovementComponent->AddResistance(DeltaTime * 0.4);
     }
 }

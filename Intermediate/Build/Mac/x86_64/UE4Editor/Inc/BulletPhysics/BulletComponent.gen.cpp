@@ -42,11 +42,19 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		P_THIS->AddResistance(Z_Param_DeltaTime);
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(UBulletComponent::execCalcForce)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->CalcForce();
+		P_NATIVE_END;
+	}
 	void UBulletComponent::StaticRegisterNativesUBulletComponent()
 	{
 		UClass* Class = UBulletComponent::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "AddResistance", &UBulletComponent::execAddResistance },
+			{ "CalcForce", &UBulletComponent::execCalcForce },
 			{ "DrawTrajectory", &UBulletComponent::execDrawTrajectory },
 			{ "showLog", &UBulletComponent::execshowLog },
 		};
@@ -71,9 +79,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::Function_MetaDataParams[] = {
-		{ "Comment", "// \xd0\xbd\xd0\xb5 \xd1\x80\xd0\xb0\xd0\xb2\xd0\xbd\xd0\xb0 0 !!!\n" },
 		{ "ModuleRelativePath", "BulletComponent.h" },
-		{ "ToolTip", "\xd0\xbd\xd0\xb5 \xd1\x80\xd0\xb0\xd0\xb2\xd0\xbd\xd0\xb0 0 !!!" },
 	};
 #endif
 	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBulletComponent, nullptr, "AddResistance", nullptr, nullptr, sizeof(BulletComponent_eventAddResistance_Parms), Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::Function_MetaDataParams)) };
@@ -83,6 +89,30 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UBulletComponent_AddResistance_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UBulletComponent_CalcForce_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBulletComponent_CalcForce_Statics::Function_MetaDataParams[] = {
+		{ "Comment", "// \xd0\xbd\xd0\xb5 \xd1\x80\xd0\xb0\xd0\xb2\xd0\xbd\xd0\xb0 0 !!!\n" },
+		{ "ModuleRelativePath", "BulletComponent.h" },
+		{ "ToolTip", "\xd0\xbd\xd0\xb5 \xd1\x80\xd0\xb0\xd0\xb2\xd0\xbd\xd0\xb0 0 !!!" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UBulletComponent_CalcForce_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBulletComponent, nullptr, "CalcForce", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBulletComponent_CalcForce_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBulletComponent_CalcForce_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UBulletComponent_CalcForce()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UBulletComponent_CalcForce_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -203,7 +233,8 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_BulletPhysics,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UBulletComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UBulletComponent_AddResistance, "AddResistance" }, // 1269156631
+		{ &Z_Construct_UFunction_UBulletComponent_AddResistance, "AddResistance" }, // 1031185360
+		{ &Z_Construct_UFunction_UBulletComponent_CalcForce, "CalcForce" }, // 3594516772
 		{ &Z_Construct_UFunction_UBulletComponent_DrawTrajectory, "DrawTrajectory" }, // 346492340
 		{ &Z_Construct_UFunction_UBulletComponent_showLog, "showLog" }, // 3561117130
 	};
@@ -218,7 +249,9 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableLog_MetaData[] = {
 		{ "Category", "Log" },
+		{ "Comment", "// \xd0\x94\xd0\xbb\xd1\x8f \xd0\xba\xd0\xbe\xd0\xbc\xd0\xbf\xd0\xb5\xd0\xbd\xd1\x81\xd0\xb0\xd1\x86\xd0\xb8\xd0\xb8 \xd1\x83\xd0\xbc\xd0\xbd\xd0\xbe\xd0\xb6\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f \xd0\xbd\xd0\xb0 \xd0\xb2\xd0\xb5\xd0\xba\xd1\x82\xd0\xbe\xd1\x80 \xd0\xbd\xd0\xb0\xd0\xbf\xd1\x80\xd0\xb0\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f (Velocity)\n" },
 		{ "ModuleRelativePath", "BulletComponent.h" },
+		{ "ToolTip", "\xd0\x94\xd0\xbb\xd1\x8f \xd0\xba\xd0\xbe\xd0\xbc\xd0\xbf\xd0\xb5\xd0\xbd\xd1\x81\xd0\xb0\xd1\x86\xd0\xb8\xd0\xb8 \xd1\x83\xd0\xbc\xd0\xbd\xd0\xbe\xd0\xb6\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f \xd0\xbd\xd0\xb0 \xd0\xb2\xd0\xb5\xd0\xba\xd1\x82\xd0\xbe\xd1\x80 \xd0\xbd\xd0\xb0\xd0\xbf\xd1\x80\xd0\xb0\xd0\xb2\xd0\xbb\xd0\xb5\xd0\xbd\xd0\xb8\xd1\x8f (Velocity)" },
 	};
 #endif
 	void Z_Construct_UClass_UBulletComponent_Statics::NewProp_EnableLog_SetBit(void* Obj)
@@ -344,7 +377,7 @@ void EmptyLinkFunctionForGeneratedCodeBulletComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UBulletComponent, 1725687985);
+	IMPLEMENT_CLASS(UBulletComponent, 4271682294);
 	template<> BULLETPHYSICS_API UClass* StaticClass<UBulletComponent>()
 	{
 		return UBulletComponent::StaticClass();

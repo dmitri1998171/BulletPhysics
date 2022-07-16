@@ -18,14 +18,16 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
  \
 	DECLARE_FUNCTION(execDrawTrajectory); \
 	DECLARE_FUNCTION(execshowLog); \
-	DECLARE_FUNCTION(execAddResistance);
+	DECLARE_FUNCTION(execAddResistance); \
+	DECLARE_FUNCTION(execCalcForce);
 
 
 #define BulletPhysics_Source_BulletPhysics_BulletComponent_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execDrawTrajectory); \
 	DECLARE_FUNCTION(execshowLog); \
-	DECLARE_FUNCTION(execAddResistance);
+	DECLARE_FUNCTION(execAddResistance); \
+	DECLARE_FUNCTION(execCalcForce);
 
 
 #define BulletPhysics_Source_BulletPhysics_BulletComponent_h_15_INCLASS_NO_PURE_DECLS \

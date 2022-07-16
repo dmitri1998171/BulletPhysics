@@ -21,9 +21,18 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	BULLETPHYSICS_API UClass* Z_Construct_UClass_AFPSProjectile_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
+	BULLETPHYSICS_API UClass* Z_Construct_UClass_UBulletComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UMaterialInstanceDynamic_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(AFPSCharacter::execDrawFutureTrajectory)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_DeltaTime);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->DrawFutureTrajectory(Z_Param_DeltaTime);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AFPSCharacter::execFire)
 	{
 		P_FINISH;
@@ -51,11 +60,44 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 	{
 		UClass* Class = AFPSCharacter::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "DrawFutureTrajectory", &AFPSCharacter::execDrawFutureTrajectory },
 			{ "Fire", &AFPSCharacter::execFire },
 			{ "MoveForward", &AFPSCharacter::execMoveForward },
 			{ "MoveRight", &AFPSCharacter::execMoveRight },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics
+	{
+		struct FPSCharacter_eventDrawFutureTrajectory_Parms
+		{
+			float DeltaTime;
+		};
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_DeltaTime;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::NewProp_DeltaTime = { "DeltaTime", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSCharacter_eventDrawFutureTrajectory_Parms, DeltaTime), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::NewProp_DeltaTime,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "FPSCharacter.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSCharacter, nullptr, "DrawFutureTrajectory", nullptr, nullptr, sizeof(FPSCharacter_eventDrawFutureTrajectory_Parms), Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AFPSCharacter_Fire_Statics
 	{
@@ -173,6 +215,10 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 #endif
 		static const UE4CodeGen_Private::FClassPropertyParams NewProp_ProjectileClass;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ProjectileMovementComponent_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_ProjectileMovementComponent;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ProjectileMeshComponent_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_ProjectileMeshComponent;
@@ -189,6 +235,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_BulletPhysics,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AFPSCharacter_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AFPSCharacter_DrawFutureTrajectory, "DrawFutureTrajectory" }, // 1139004524
 		{ &Z_Construct_UFunction_AFPSCharacter_Fire, "Fire" }, // 1415590024
 		{ &Z_Construct_UFunction_AFPSCharacter_MoveForward, "MoveForward" }, // 1261208855
 		{ &Z_Construct_UFunction_AFPSCharacter_MoveRight, "MoveRight" }, // 798508334
@@ -229,6 +276,16 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 #endif
 	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileClass = { "ProjectileClass", nullptr, (EPropertyFlags)0x0014000000010001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AFPSCharacter, ProjectileClass), Z_Construct_UClass_AFPSProjectile_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileClass_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileClass_MetaData)) };
 #if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMovementComponent_MetaData[] = {
+		{ "Category", "Movement" },
+		{ "Comment", "// Projectile movement component.\n" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "FPSCharacter.h" },
+		{ "ToolTip", "Projectile movement component." },
+	};
+#endif
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMovementComponent = { "ProjectileMovementComponent", nullptr, (EPropertyFlags)0x00100000000a0009, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AFPSCharacter, ProjectileMovementComponent), Z_Construct_UClass_UBulletComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMovementComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMovementComponent_MetaData)) };
+#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMeshComponent_MetaData[] = {
 		{ "Category", "Projectile" },
 		{ "Comment", "// Projectile mesh\n" },
@@ -251,6 +308,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFPSCharacter_Statics::NewProp_FPSCameraComponent,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFPSCharacter_Statics::NewProp_MuzzleOffset,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileClass,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMovementComponent,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMeshComponent,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFPSCharacter_Statics::NewProp_ProjectileMaterialInstance,
 	};
@@ -281,7 +339,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSCharacter() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AFPSCharacter, 1464031904);
+	IMPLEMENT_CLASS(AFPSCharacter, 2908227402);
 	template<> BULLETPHYSICS_API UClass* StaticClass<AFPSCharacter>()
 	{
 		return AFPSCharacter::StaticClass();

@@ -8,7 +8,7 @@ AFPSProjectile::AFPSProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-    
+        
     if(!RootComponent)
     {
         RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
@@ -71,10 +71,16 @@ void AFPSProjectile::Tick(float DeltaTime)
 
     SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
     
-    DrawDebugSphere(GetWorld(), GetActorLocation(), 300, 10, FColor::Magenta, false, DeltaTime* 1.5, 0, 3);
+    DrawDebugSphere(GetWorld(), GetActorLocation(), 90, 10, FColor::Magenta, false, DeltaTime* 1.5, 0, 3);
     
-    
-    
+    if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(90), SphereCollisionParams))  {
+        for (int i = 0; i < SphereOverlapResult.Num(); i++) {
+            if(SphereOverlapResult[i].GetActor() != this) {
+                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, FString::Printf(TEXT("Sphere hited: %s"), *SphereOverlapResult[i].GetActor()->GetName()));
+            }
+        }
+    }
+        
 //    CollisionDetection(DeltaTime);
 
 }

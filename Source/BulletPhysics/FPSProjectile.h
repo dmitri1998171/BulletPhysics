@@ -15,13 +15,12 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
         
-//    TArray<UClass> Subclasses;
-    
-    FVector tmpForce;
-    
     FVector Start;
     FVector End;
-        
+    
+    TArray<FOverlapResult> SphereOverlapResult;
+    FCollisionQueryParams SphereCollisionParams;
+    
     FHitResult OutHit;
     FCollisionQueryParams CollisionParams;
     

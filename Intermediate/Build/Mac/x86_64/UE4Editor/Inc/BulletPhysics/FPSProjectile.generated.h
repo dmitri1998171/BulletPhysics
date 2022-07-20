@@ -20,12 +20,14 @@ struct FHitResult;
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_SPARSE_DATA
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execOnHit);
 
 
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execOnHit);
 

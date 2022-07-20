@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "86D342C0590CA9090203855A"
+               BlueprintIdentifier = "9A08021F82A13FBE15998AAC"
                BuildableName = "BulletPhysics.app"
                BlueprintName = "BulletPhysics"
                ReferencedContainer = "container:BulletPhysics.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "86D342C0590CA9090203855A"
+               BlueprintIdentifier = "9A08021F82A13FBE15998AAC"
                BuildableName = "BulletPhysics.app"
                BlueprintName = "BulletPhysics"
                ReferencedContainer = "container:BulletPhysics.xcodeproj">
@@ -55,7 +55,7 @@
          runnableDebuggingMode = "0">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "86D342C0590CA9090203855A"
+               BlueprintIdentifier = "9A08021F82A13FBE15998AAC"
                BuildableName = "BulletPhysics.app"
                BlueprintName = "BulletPhysics"
                ReferencedContainer = "container:BulletPhysics.xcodeproj">
@@ -83,7 +83,7 @@
          runnableDebuggingMode = "0">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "86D342C0590CA9090203855A"
+               BlueprintIdentifier = "9A08021F82A13FBE15998AAC"
                BuildableName = "BulletPhysics.app"
                BlueprintName = "BulletPhysics"
                ReferencedContainer = "container:BulletPhysics.xcodeproj">

@@ -87,7 +87,7 @@ void AFPSCharacter::Fire()
     // Attempt to fire a projectile.
     if (ProjectileClass)
     {
-        MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
+        MuzzleOffset.Set(200.0f, 0.0f, 0.0f);
 
         // Transform MuzzleOffset from camera space to world space.
         FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);

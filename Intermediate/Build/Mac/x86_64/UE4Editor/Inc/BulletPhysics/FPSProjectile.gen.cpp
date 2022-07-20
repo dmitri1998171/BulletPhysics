@@ -26,6 +26,14 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UMaterialInstanceDynamic_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(AFPSProjectile::execBroadPhaseCollisionDetection)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_DeltaTime);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->BroadPhaseCollisionDetection(Z_Param_DeltaTime);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AFPSProjectile::execCollisionDetection)
 	{
 		P_GET_PROPERTY(FFloatProperty,Z_Param_DeltaTime);
@@ -50,10 +58,43 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 	{
 		UClass* Class = AFPSProjectile::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "BroadPhaseCollisionDetection", &AFPSProjectile::execBroadPhaseCollisionDetection },
 			{ "CollisionDetection", &AFPSProjectile::execCollisionDetection },
 			{ "OnHit", &AFPSProjectile::execOnHit },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics
+	{
+		struct FPSProjectile_eventBroadPhaseCollisionDetection_Parms
+		{
+			float DeltaTime;
+		};
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_DeltaTime;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::NewProp_DeltaTime = { "DeltaTime", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventBroadPhaseCollisionDetection_Parms, DeltaTime), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::NewProp_DeltaTime,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "FPSProjectile.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSProjectile, nullptr, "BroadPhaseCollisionDetection", nullptr, nullptr, sizeof(FPSProjectile_eventBroadPhaseCollisionDetection_Parms), Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AFPSProjectile_CollisionDetection_Statics
 	{
@@ -197,6 +238,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_BulletPhysics,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AFPSProjectile_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection, "BroadPhaseCollisionDetection" }, // 3020325814
 		{ &Z_Construct_UFunction_AFPSProjectile_CollisionDetection, "CollisionDetection" }, // 1295562618
 		{ &Z_Construct_UFunction_AFPSProjectile_OnHit, "OnHit" }, // 303805887
 	};
@@ -278,7 +320,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AFPSProjectile, 1394030991);
+	IMPLEMENT_CLASS(AFPSProjectile, 1302181561);
 	template<> BULLETPHYSICS_API UClass* StaticClass<AFPSProjectile>()
 	{
 		return AFPSProjectile::StaticClass();

@@ -15,6 +15,12 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
         
+    AActor* _OtherActor;
+    FVector OtherActorVelocity;
+    
+    FVector OtherActorStart;
+    FVector OtherActorEnd;
+    
     FVector Start;
     FVector End;
     
@@ -61,4 +67,7 @@ public:
         
     UFUNCTION()
     void CollisionDetection(float DeltaTime);
+    
+    UFUNCTION()
+    void BroadPhaseCollisionDetection(float DeltaTime);
 };

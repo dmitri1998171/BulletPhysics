@@ -19,9 +19,9 @@ AFPSProjectile::AFPSProjectile()
         // Use a sphere as a simple collision representation.
         CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
         // Set the sphere's collision profile name to "Projectile".
-        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
+//        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
         // Event called when component hits something.
-        CollisionComponent->OnComponentHit.AddDynamic(this, &AFPSProjectile::OnHit);
+//        CollisionComponent->OnComponentHit.AddDynamic(this, &AFPSProjectile::OnHit);
         // Set the sphere's collision radius.
         CollisionComponent->InitSphereRadius(15.0f);
         // Set the root component to be the collision component.
@@ -71,15 +71,7 @@ void AFPSProjectile::Tick(float DeltaTime)
 
     SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
     
-    DrawDebugSphere(GetWorld(), GetActorLocation(), 90, 10, FColor::Magenta, false, DeltaTime* 1.5, 0, 3);
-    
-    if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(90), SphereCollisionParams))  {
-        for (int i = 0; i < SphereOverlapResult.Num(); i++) {
-            if(SphereOverlapResult[i].GetActor() != this) {
-                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, FString::Printf(TEXT("Sphere hited: %s"), *SphereOverlapResult[i].GetActor()->GetName()));
-            }
-        }
-    }
+    BroadPhaseCollisionDetection(DeltaTime);
         
 //    CollisionDetection(DeltaTime);
 
@@ -124,12 +116,36 @@ void AFPSProjectile::CollisionDetection(float DeltaTime) {
     }
 }
 
-//void AFPSProjectile::IterateAllSceneObjects() {
-//    for(TObjectIterator<UClass> It; It; ++It)
-//     {
-//         if(It->IsChildOf(USomeAwesomeClass::StaticClass()) && !It->HasAnyClassFlags(CLASS_Abstract))
-//         {
-//             Subclasses.Add(*It);
-//         }
-//     }
-//}
+void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
+    DrawDebugSphere(GetWorld(), GetActorLocation(), 90, 10, FColor::Magenta, false, DeltaTime* 1.5, 0, 3);
+    
+    if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(190), SphereCollisionParams)) {
+        for (int i = 0; i < SphereOverlapResult.Num(); i++) {
+            if(SphereOverlapResult[i].GetActor() != this) {
+                _OtherActor = SphereOverlapResult[i].GetActor();
+                OtherActorVelocity = _OtherActor->GetVelocity();
+                
+//                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, FString::Printf(TEXT("Sphere hited: %s"), *_OtherActor->GetName()));
+//                UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
+            }
+        }
+        
+        if(OtherActorVelocity.IsZero() == false) {
+            UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
+            
+/*
+
+ Вычисления работают только для объектов, движущихся через физику (Velocity). При движении по сплайну нормально прочитать Velocity и нарисовать траекторию невозможно!
+ 
+*/
+            
+            OtherActorStart = _OtherActor->GetActorLocation();
+
+//            for (int i = 0; i < 300; i++) {
+                OtherActorEnd = OtherActorStart + (OtherActorVelocity * 30);
+                DrawDebugLine(GetWorld(), OtherActorStart, OtherActorEnd, FColor::Red, false, 3, 0, 10);
+//                OtherActorStart = OtherActorEnd;
+//            }
+        }
+    }
+}

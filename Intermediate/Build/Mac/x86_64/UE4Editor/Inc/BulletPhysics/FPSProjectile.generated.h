@@ -8,9 +8,9 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+struct FVector;
 class UPrimitiveComponent;
 class AActor;
-struct FVector;
 struct FHitResult;
 #ifdef BULLETPHYSICS_FPSProjectile_generated_h
 #error "FPSProjectile.generated.h already included, missing '#pragma once' in FPSProjectile.h"
@@ -20,14 +20,20 @@ struct FHitResult;
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_SPARSE_DATA
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
+	DECLARE_FUNCTION(execCalcVelocity); \
 	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
+	DECLARE_FUNCTION(execcross); \
 	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execOnHit);
 
 
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
+	DECLARE_FUNCTION(execCalcVelocity); \
 	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
+	DECLARE_FUNCTION(execcross); \
 	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execOnHit);
 

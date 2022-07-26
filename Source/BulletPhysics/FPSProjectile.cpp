@@ -9,6 +9,9 @@ AFPSProjectile::AFPSProjectile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
         
+    CoordCalc = false;
+    PastCoordCalc = false;
+    
     if(!RootComponent)
     {
         RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSceneComponent"));
@@ -55,6 +58,7 @@ AFPSProjectile::AFPSProjectile()
     
     // Delete the projectile after 3 seconds.
     InitialLifeSpan = 3.0f;
+    _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
 }
 
 // Called when the game starts or when spawned
@@ -95,13 +99,10 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor
 }
 
 void AFPSProjectile::CollisionDetection(float DeltaTime) {
-//    UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
-    
     Start = GetActorLocation() + (ProjectileMovementComponent->Velocity * CollisionComponent->GetScaledSphereRadius());   // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд;
     End = Start + ProjectileMovementComponent->Force;
     
-    for (int i = 0; i < 1000; i++) {
-        // Отрисовка линии
+    for (int i = 0; i < 250; i++) {
         DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, DeltaTime * 1.5, 0, CollisionComponent->GetScaledSphereRadius());
         
         if(GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams)) {
@@ -116,36 +117,104 @@ void AFPSProjectile::CollisionDetection(float DeltaTime) {
     }
 }
 
-void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
-    DrawDebugSphere(GetWorld(), GetActorLocation(), 90, 10, FColor::Magenta, false, DeltaTime* 1.5, 0, 3);
+bool AFPSProjectile::cross(FVector a, FVector c, FVector b, FVector d) {
+    float n;
+//    https://habr.com/ru/post/523440/
     
-    if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(190), SphereCollisionParams)) {
+/*
+    a - текущ. позиция
+    b - force
+    c - позиция др. объекта
+    d - velocity др. объекта
+*/
+    
+        if (b.Y - a.Y != 0) {  // a(y)
+            float q = (b.X - a.X) / (a.Y - b.Y);
+            float sn = (c.X - d.X) + (c.Y - d.Y) * q; if (!sn) { return 0; }  // c(x) + c(y)*q
+            float fn = (c.X - a.X) + (c.Y - a.Y) * q;                         // b(x) + b(y)*q
+            n = fn / sn;
+        }
+        else {
+            if (!(c.Y - d.Y)) { return 0; }    // b(y)
+            n = (c.Y - a.Y) / (c.Y - d.Y);     // c(y)/b(y)
+        }
+        dot[0] = c.X + (d.X - c.X) * n;  // c.X + (-b(x))*n
+        dot[1] = c.Y + (d.Y - c.Y) * n;  // c.Y + (-b(y))*n
+        return 1;
+}
+
+void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
+    Start = GetActorLocation();
+    End = Start + (ProjectileMovementComponent->Force * 900);
+    DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, DeltaTime * 1.5, 0, 5);
+
+    Cube = FVector(ProjectileMovementComponent->Force.GetAbsMax(), _CubeSize, _CubeSize);
+    
+//    UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
+//    UE_LOG(LogTemp, Warning, TEXT("Force max value: %f"), ProjectileMovementComponent->Force.GetMax());
+    
+    CubeRotation = ProjectileMovementComponent->Force.ToOrientationQuat();
+    BoxStart = GetActorLocation() + (ProjectileMovementComponent->Velocity * (CollisionComponent->GetScaledSphereRadius() + ProjectileMovementComponent->Force.GetAbsMax()));
+    DrawDebugBox(GetWorld(), BoxStart, Cube, CubeRotation, FColor::Magenta, false, DeltaTime * 1.5, 0, 3);
+    
+    DrawDebugBox(GetWorld(), FVector(0, 0, 0), Cube, FQuat(0, 0, 0, 0), FColor::Yellow, false, DeltaTime * 1.5, 0, 3);
+    
+    if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), CubeRotation, ECC_Visibility, FCollisionShape::MakeBox(Cube), SphereCollisionParams)) {
         for (int i = 0; i < SphereOverlapResult.Num(); i++) {
             if(SphereOverlapResult[i].GetActor() != this) {
                 _OtherActor = SphereOverlapResult[i].GetActor();
-                OtherActorVelocity = _OtherActor->GetVelocity();
                 
-//                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, FString::Printf(TEXT("Sphere hited: %s"), *_OtherActor->GetName()));
+                CalcVelocity(OtherActorVelocity);
+
+//                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, FString::Printf(TEXT("Box hited: %s"), *_OtherActor->GetName()));
 //                UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
             }
         }
-        
+
+//        Проверка столкновений с движущимися объектами 
         if(OtherActorVelocity.IsZero() == false) {
-            UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
-            
-/*
+//            UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
 
- Вычисления работают только для объектов, движущихся через физику (Velocity). При движении по сплайну нормально прочитать Velocity и нарисовать траекторию невозможно!
- 
-*/
-            
+            /*
+             Вычисления работают только для объектов, движущихся через физику (Velocity). При движении по сплайну нормально прочитать Velocity и нарисовать траекторию невозможно!
+             Velocity высчитывается только при вкл. симуляции физики!
+            */
+
             OtherActorStart = _OtherActor->GetActorLocation();
-
-//            for (int i = 0; i < 300; i++) {
-                OtherActorEnd = OtherActorStart + (OtherActorVelocity * 30);
-                DrawDebugLine(GetWorld(), OtherActorStart, OtherActorEnd, FColor::Red, false, 3, 0, 10);
-//                OtherActorStart = OtherActorEnd;
-//            }
+            OtherActorEnd = OtherActorStart + (OtherActorVelocity * 90);
+            DrawDebugLine(GetWorld(), OtherActorStart, OtherActorEnd, FColor::Red, false, DeltaTime * 1.5, 0, 5);
+        
+            UE_LOG(LogTemp, Warning, TEXT("%s's position: %s"), *_OtherActor->GetName(), *OtherActorStart.ToString());
+            
+            if(cross(GetActorLocation(), GetActorLocation() + ProjectileMovementComponent->Force, OtherActorStart, OtherActorStart + OtherActorVelocity))
+                UE_LOG(LogTemp, Warning, TEXT("Impact point: %f  %f"), dot[0], dot[1]);
+        }
+        
+//        Проверка столкновений со статичными объектами
+        else {
+            
         }
     }
+}
+
+void AFPSProjectile::CalcVelocity(FVector& DeltaVelocity) {
+    if(!CoordCalc && PastCoordCalc) {
+        CurrCoord = _OtherActor->GetActorLocation();
+        DeltaVelocity = CurrCoord - PastCoord;
+        CoordCalc = true;
+    }
+    
+    if(!PastCoordCalc) {
+        PastCoord = _OtherActor->GetActorLocation();
+        PastCoordCalc = true;
+    }
+}
+
+bool AFPSProjectile::NarrowPhaseCollisionDetection(FVector Velocity, float Radius) {
+    float Diametr = Radius * 2;
+    
+    if((Velocity.X <= Diametr) || (Velocity.Y <= Diametr) || (Velocity.Z <= Diametr))
+        return true;
+        
+    return false;
 }

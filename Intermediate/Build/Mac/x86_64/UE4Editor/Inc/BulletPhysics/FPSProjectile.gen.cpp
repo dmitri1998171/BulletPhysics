@@ -17,21 +17,49 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 	BULLETPHYSICS_API UClass* Z_Construct_UClass_AFPSProjectile();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	UPackage* Z_Construct_UPackage__Script_BulletPhysics();
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	ENGINE_API UClass* Z_Construct_UClass_UPrimitiveComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 	ENGINE_API UClass* Z_Construct_UClass_USphereComponent_NoRegister();
 	BULLETPHYSICS_API UClass* Z_Construct_UClass_UBulletComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UMaterialInstanceDynamic_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(AFPSProjectile::execNarrowPhaseCollisionDetection)
+	{
+		P_GET_STRUCT(FVector,Z_Param_Velocity);
+		P_GET_PROPERTY(FFloatProperty,Z_Param_Radius);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=P_THIS->NarrowPhaseCollisionDetection(Z_Param_Velocity,Z_Param_Radius);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AFPSProjectile::execCalcVelocity)
+	{
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_DeltaVelocity);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->CalcVelocity(Z_Param_Out_DeltaVelocity);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AFPSProjectile::execBroadPhaseCollisionDetection)
 	{
 		P_GET_PROPERTY(FFloatProperty,Z_Param_DeltaTime);
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		P_THIS->BroadPhaseCollisionDetection(Z_Param_DeltaTime);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AFPSProjectile::execcross)
+	{
+		P_GET_STRUCT(FVector,Z_Param_a);
+		P_GET_STRUCT(FVector,Z_Param_c);
+		P_GET_STRUCT(FVector,Z_Param_b);
+		P_GET_STRUCT(FVector,Z_Param_d);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=P_THIS->cross(Z_Param_a,Z_Param_c,Z_Param_b,Z_Param_d);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(AFPSProjectile::execCollisionDetection)
@@ -59,7 +87,10 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		UClass* Class = AFPSProjectile::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
 			{ "BroadPhaseCollisionDetection", &AFPSProjectile::execBroadPhaseCollisionDetection },
+			{ "CalcVelocity", &AFPSProjectile::execCalcVelocity },
 			{ "CollisionDetection", &AFPSProjectile::execCollisionDetection },
+			{ "cross", &AFPSProjectile::execcross },
+			{ "NarrowPhaseCollisionDetection", &AFPSProjectile::execNarrowPhaseCollisionDetection },
 			{ "OnHit", &AFPSProjectile::execOnHit },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -96,6 +127,38 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics
+	{
+		struct FPSProjectile_eventCalcVelocity_Parms
+		{
+			FVector DeltaVelocity;
+		};
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_DeltaVelocity;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::NewProp_DeltaVelocity = { "DeltaVelocity", nullptr, (EPropertyFlags)0x0010000000000180, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventCalcVelocity_Parms, DeltaVelocity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::NewProp_DeltaVelocity,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "FPSProjectile.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSProjectile, nullptr, "CalcVelocity", nullptr, nullptr, sizeof(FPSProjectile_eventCalcVelocity_Parms), Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00C20401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AFPSProjectile_CalcVelocity()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSProjectile_CalcVelocity_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	struct Z_Construct_UFunction_AFPSProjectile_CollisionDetection_Statics
 	{
 		struct FPSProjectile_eventCollisionDetection_Parms
@@ -125,6 +188,104 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSProjectile_CollisionDetection_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AFPSProjectile_cross_Statics
+	{
+		struct FPSProjectile_eventcross_Parms
+		{
+			FVector a;
+			FVector c;
+			FVector b;
+			FVector d;
+			bool ReturnValue;
+		};
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_a;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_c;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_b;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_d;
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_a = { "a", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventcross_Parms, a), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_c = { "c", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventcross_Parms, c), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_b = { "b", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventcross_Parms, b), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_d = { "d", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventcross_Parms, d), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	void Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((FPSProjectile_eventcross_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(FPSProjectile_eventcross_Parms), &Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSProjectile_cross_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_a,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_c,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_b,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_d,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_cross_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSProjectile_cross_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "FPSProjectile.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSProjectile_cross_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSProjectile, nullptr, "cross", nullptr, nullptr, sizeof(FPSProjectile_eventcross_Parms), Z_Construct_UFunction_AFPSProjectile_cross_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_cross_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00820401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSProjectile_cross_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_cross_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AFPSProjectile_cross()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSProjectile_cross_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics
+	{
+		struct FPSProjectile_eventNarrowPhaseCollisionDetection_Parms
+		{
+			FVector Velocity;
+			float Radius;
+			bool ReturnValue;
+		};
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Velocity;
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Radius;
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_Velocity = { "Velocity", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventNarrowPhaseCollisionDetection_Parms, Velocity), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_Radius = { "Radius", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(FPSProjectile_eventNarrowPhaseCollisionDetection_Parms, Radius), METADATA_PARAMS(nullptr, 0) };
+	void Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((FPSProjectile_eventNarrowPhaseCollisionDetection_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(FPSProjectile_eventNarrowPhaseCollisionDetection_Parms), &Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_Velocity,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_Radius,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "FPSProjectile.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AFPSProjectile, nullptr, "NarrowPhaseCollisionDetection", nullptr, nullptr, sizeof(FPSProjectile_eventNarrowPhaseCollisionDetection_Parms), Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00820401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -239,7 +400,10 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AFPSProjectile_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_AFPSProjectile_BroadPhaseCollisionDetection, "BroadPhaseCollisionDetection" }, // 3020325814
+		{ &Z_Construct_UFunction_AFPSProjectile_CalcVelocity, "CalcVelocity" }, // 4106761033
 		{ &Z_Construct_UFunction_AFPSProjectile_CollisionDetection, "CollisionDetection" }, // 1295562618
+		{ &Z_Construct_UFunction_AFPSProjectile_cross, "cross" }, // 1695429039
+		{ &Z_Construct_UFunction_AFPSProjectile_NarrowPhaseCollisionDetection, "NarrowPhaseCollisionDetection" }, // 3519814243
 		{ &Z_Construct_UFunction_AFPSProjectile_OnHit, "OnHit" }, // 303805887
 	};
 #if WITH_METADATA
@@ -320,7 +484,7 @@ void EmptyLinkFunctionForGeneratedCodeFPSProjectile() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AFPSProjectile, 1302181561);
+	IMPLEMENT_CLASS(AFPSProjectile, 2433175960);
 	template<> BULLETPHYSICS_API UClass* StaticClass<AFPSProjectile>()
 	{
 		return AFPSProjectile::StaticClass();

@@ -15,11 +15,29 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
         
+    FVector CrossProductVector;
+    FVector Cube;
+    float _CubeSize;
+    FQuat CubeRotation;
+    
+    
     AActor* _OtherActor;
     FVector OtherActorVelocity;
     
     FVector OtherActorStart;
     FVector OtherActorEnd;
+    
+    bool CoordCalc;
+    bool PastCoordCalc;
+    FVector PastCoord;
+    FVector CurrCoord;
+    
+    float dot[2];  // точка пересечения
+    
+// ---------------------------
+    
+    FVector BoxStart;
+    FVector BoxEnd;
     
     FVector Start;
     FVector End;
@@ -69,5 +87,14 @@ public:
     void CollisionDetection(float DeltaTime);
     
     UFUNCTION()
+    bool cross(FVector a, FVector c, FVector b, FVector d);
+    
+    UFUNCTION()
     void BroadPhaseCollisionDetection(float DeltaTime);
+    
+    UFUNCTION()
+    void CalcVelocity(FVector& DeltaVelocity);
+    
+    UFUNCTION()
+    bool NarrowPhaseCollisionDetection(FVector Velocity, float Radius);
 };

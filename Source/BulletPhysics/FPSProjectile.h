@@ -15,11 +15,9 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
 	GENERATED_BODY()
         
-    FVector CrossProductVector;
     FVector Cube;
     float _CubeSize;
     FQuat CubeRotation;
-    
     
     AActor* _OtherActor;
     FVector OtherActorVelocity;
@@ -32,7 +30,12 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     FVector PastCoord;
     FVector CurrCoord;
     
-    float dot[2];  // точка пересечения
+    FVector ImpactPoint;  // точка пересечения
+    
+    float length;
+    float time;
+    
+    float OtherActorLength;
     
 // ---------------------------
     

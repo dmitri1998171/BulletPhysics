@@ -138,8 +138,9 @@ bool AFPSProjectile::cross(FVector a, FVector c, FVector b, FVector d) {
             if (!(c.Y - d.Y)) { return 0; }    // b(y)
             n = (c.Y - a.Y) / (c.Y - d.Y);     // c(y)/b(y)
         }
-        dot[0] = c.X + (d.X - c.X) * n;  // c.X + (-b(x))*n
-        dot[1] = c.Y + (d.Y - c.Y) * n;  // c.Y + (-b(y))*n
+    
+        ImpactPoint.X = c.X + (d.X - c.X) * n;  // c.X + (-b(x))*n
+        ImpactPoint.Y = c.Y + (d.Y - c.Y) * n;  // c.Y + (-b(y))*n
         return 1;
 }
 
@@ -150,24 +151,21 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
 
     Cube = FVector(ProjectileMovementComponent->Force.GetAbsMax(), _CubeSize, _CubeSize);
     
-//    UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
-//    UE_LOG(LogTemp, Warning, TEXT("Force max value: %f"), ProjectileMovementComponent->Force.GetMax());
-    
     CubeRotation = ProjectileMovementComponent->Force.ToOrientationQuat();
     BoxStart = GetActorLocation() + (ProjectileMovementComponent->Velocity * (CollisionComponent->GetScaledSphereRadius() + ProjectileMovementComponent->Force.GetAbsMax()));
     DrawDebugBox(GetWorld(), BoxStart, Cube, CubeRotation, FColor::Magenta, false, DeltaTime * 1.5, 0, 3);
     
-    DrawDebugBox(GetWorld(), FVector(0, 0, 0), Cube, FQuat(0, 0, 0, 0), FColor::Yellow, false, DeltaTime * 1.5, 0, 3);
+//    DrawDebugBox(GetWorld(), FVector(0, 0, 0), Cube, FQuat(0, 0, 0, 0), FColor::Yellow, false, DeltaTime * 1.5, 0, 3);
     
+
+// Проверяем проникновение внутрь "коридора"
     if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), CubeRotation, ECC_Visibility, FCollisionShape::MakeBox(Cube), SphereCollisionParams)) {
+        
+//        Проходимся по всем элементам, проникщих внутрь "коридора", и отсеиваем лишнее
         for (int i = 0; i < SphereOverlapResult.Num(); i++) {
             if(SphereOverlapResult[i].GetActor() != this) {
                 _OtherActor = SphereOverlapResult[i].GetActor();
-                
                 CalcVelocity(OtherActorVelocity);
-
-//                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, FString::Printf(TEXT("Box hited: %s"), *_OtherActor->GetName()));
-//                UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
             }
         }
 
@@ -183,11 +181,17 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
             OtherActorStart = _OtherActor->GetActorLocation();
             OtherActorEnd = OtherActorStart + (OtherActorVelocity * 90);
             DrawDebugLine(GetWorld(), OtherActorStart, OtherActorEnd, FColor::Red, false, DeltaTime * 1.5, 0, 5);
-        
-            UE_LOG(LogTemp, Warning, TEXT("%s's position: %s"), *_OtherActor->GetName(), *OtherActorStart.ToString());
             
-            if(cross(GetActorLocation(), GetActorLocation() + ProjectileMovementComponent->Force, OtherActorStart, OtherActorStart + OtherActorVelocity))
-                UE_LOG(LogTemp, Warning, TEXT("Impact point: %f  %f"), dot[0], dot[1]);
+//            Проверка пересечения траекторий по XY
+            if(cross(GetActorLocation(), GetActorLocation() + ProjectileMovementComponent->Force, OtherActorStart, OtherActorStart + OtherActorVelocity)) {
+//                UE_LOG(LogTemp, Warning, TEXT("Impact point: %s"), *ImpactPoint.ToString());
+                    
+                length = FVector::DistXY(GetActorLocation(), ImpactPoint);
+                time = length / ProjectileMovementComponent->Force.Size2D();
+                
+                OtherActorLength = OtherActorVelocity.Size2D() * time;
+//                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
+            }
         }
         
 //        Проверка столкновений со статичными объектами

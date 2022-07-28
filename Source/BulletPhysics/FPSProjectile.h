@@ -19,16 +19,22 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     float _CubeSize;
     FQuat CubeRotation;
     
+// ---------------------------
+    
     AActor* _OtherActor;
     FVector OtherActorVelocity;
     
     FVector OtherActorStart;
     FVector OtherActorEnd;
     
+// ---------------------------
+    
     bool CoordCalc;
     bool PastCoordCalc;
     FVector PastCoord;
     FVector CurrCoord;
+    
+// ---------------------------
     
     FVector ImpactPoint;  // точка пересечения
     
@@ -40,19 +46,22 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 // ---------------------------
     
     FVector BoxStart;
-    FVector BoxEnd;
     
-    FVector Start;
-    FVector End;
+    TArray<FOverlapResult> BoxOverlapResult;
+    FCollisionQueryParams BoxCollisionParams;
     
-    TArray<FOverlapResult> SphereOverlapResult;
-    FCollisionQueryParams SphereCollisionParams;
+// ---------------------------
     
     TArray<FOverlapResult> ProjectileOverlapResult;
     FCollisionQueryParams ProjectileCollisionParams;
     
-    FHitResult OutHit;
-    FCollisionQueryParams CollisionParams;
+// ---------------------------
+    
+    FVector Start;
+    FVector End;
+
+    FHitResult LineOutHit;
+    FCollisionQueryParams LineCollisionParams;
     
 public:	
 	// Sets default values for this actor's properties

@@ -105,10 +105,10 @@ void AFPSProjectile::CollisionDetection(float DeltaTime) {
     for (int i = 0; i < 250; i++) {
         DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, DeltaTime * 1.5, 0, CollisionComponent->GetScaledSphereRadius());
         
-        if(GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams)) {
-            if(OutHit.GetActor() != this) {
-                GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Yellow, FString::Printf(TEXT("You will hit: %s"), *OutHit.GetActor()->GetName()));
-//                UE_LOG(LogTemp, Warning, TEXT("Collision detected: %s"), *OutHit.GetActor()->GetName());
+        if(GetWorld()->LineTraceSingleByChannel(LineOutHit, Start, End, ECC_Visibility, LineCollisionParams)) {
+            if(LineOutHit.GetActor() != this) {
+                GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Yellow, FString::Printf(TEXT("You will hit: %s"), *LineOutHit.GetActor()->GetName()));
+//                UE_LOG(LogTemp, Warning, TEXT("Collision detected: %s"), *LineOutHit.GetActor()->GetName());
             }
         }
         
@@ -158,12 +158,12 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
 //    DrawDebugBox(GetWorld(), FVector(0, 0, 0), Cube, FQuat(0, 0, 0, 0), FColor::Yellow, false, DeltaTime * 1.5, 0, 3);
     
 // Проверяем проникновение внутрь "коридора"
-    if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), CubeRotation, ECC_Visibility, FCollisionShape::MakeBox(Cube), SphereCollisionParams)) {
+    if(GetWorld()->OverlapMultiByChannel(BoxOverlapResult, GetActorLocation(), CubeRotation, ECC_Visibility, FCollisionShape::MakeBox(Cube), BoxCollisionParams)) {
         
 //        Проходимся по всем элементам, проникщих внутрь "коридора", и отсеиваем лишнее
-        for (int i = 0; i < SphereOverlapResult.Num(); i++) {
-            if(SphereOverlapResult[i].GetActor() != this) {
-                _OtherActor = SphereOverlapResult[i].GetActor();
+        for (int i = 0; i < BoxOverlapResult.Num(); i++) {
+            if(BoxOverlapResult[i].GetActor() != this) {
+                _OtherActor = BoxOverlapResult[i].GetActor();
                 CalcVelocity(OtherActorVelocity);
             }
         }

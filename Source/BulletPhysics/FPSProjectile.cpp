@@ -157,7 +157,6 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
     
 //    DrawDebugBox(GetWorld(), FVector(0, 0, 0), Cube, FQuat(0, 0, 0, 0), FColor::Yellow, false, DeltaTime * 1.5, 0, 3);
     
-
 // Проверяем проникновение внутрь "коридора"
     if(GetWorld()->OverlapMultiByChannel(SphereOverlapResult, GetActorLocation(), CubeRotation, ECC_Visibility, FCollisionShape::MakeBox(Cube), SphereCollisionParams)) {
         
@@ -191,6 +190,17 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
                 
                 OtherActorLength = OtherActorVelocity.Size2D() * time;
 //                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
+                
+//                Узкая фаза проверки столкновений
+                if(GetWorld()->OverlapMultiByChannel(ProjectileOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(_CubeSize), ProjectileCollisionParams)) {
+                    
+            //        Проходимся по всем элементам, проникщих внутрь снаряда, и отсеиваем лишнее
+                    for (int i = 0; i < ProjectileOverlapResult.Num(); i++) {
+                        if(ProjectileOverlapResult[i].GetActor() != this) {
+                            GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("Collision detected!")));
+                        }
+                    }
+                }
             }
         }
         

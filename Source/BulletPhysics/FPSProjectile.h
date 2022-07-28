@@ -48,6 +48,9 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     TArray<FOverlapResult> SphereOverlapResult;
     FCollisionQueryParams SphereCollisionParams;
     
+    TArray<FOverlapResult> ProjectileOverlapResult;
+    FCollisionQueryParams ProjectileCollisionParams;
+    
     FHitResult OutHit;
     FCollisionQueryParams CollisionParams;
     

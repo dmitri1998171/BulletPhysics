@@ -58,6 +58,11 @@ AFPSProjectile::AFPSProjectile()
     
     // Delete the projectile after 3 seconds.
     InitialLifeSpan = 3.0f;
+    
+    IsHited = false;
+    Called = false;
+    k = 0.5;
+    AttackAngle = 0;
     _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
 }
 
@@ -73,9 +78,13 @@ void AFPSProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
-    
-    BroadPhaseCollisionDetection(DeltaTime);
+    if( ! IsHited) {
+        SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
+        BroadPhaseCollisionDetection(DeltaTime);
+    }
+    else {
+        ProjectileReflection();
+    }
         
 //    CollisionDetection(DeltaTime);
 
@@ -146,7 +155,7 @@ bool AFPSProjectile::cross(FVector a, FVector c, FVector b, FVector d) {
 
 void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
     Start = GetActorLocation();
-    End = Start + (ProjectileMovementComponent->Force * 900);
+    End = Start + (ProjectileMovementComponent->Force * 100);
     DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, DeltaTime * 1.5, 0, 5);
 
     Cube = FVector(ProjectileMovementComponent->Force.GetAbsMax(), _CubeSize, _CubeSize);
@@ -164,6 +173,7 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
         for (int i = 0; i < BoxOverlapResult.Num(); i++) {
             if(BoxOverlapResult[i].GetActor() != this) {
                 _OtherActor = BoxOverlapResult[i].GetActor();
+                OtherActorComp = BoxOverlapResult[i].GetComponent();
                 CalcVelocity(OtherActorVelocity);
             }
         }
@@ -198,6 +208,8 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
                     for (int i = 0; i < ProjectileOverlapResult.Num(); i++) {
                         if(ProjectileOverlapResult[i].GetActor() != this) {
                             GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("Collision detected!")));
+                            
+                            IsHited = true;
                         }
                     }
                 }
@@ -206,7 +218,8 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
         
 //        Проверка столкновений со статичными объектами
         else {
-            
+//            if(_OtherActor != GetOwner())
+//                ProjectileReflection();
         }
     }
 }
@@ -231,4 +244,41 @@ bool AFPSProjectile::NarrowPhaseCollisionDetection(FVector Velocity, float Radiu
         return true;
         
     return false;
+}
+
+void AFPSProjectile::ProjectileReflection() {
+    // Не пробил
+    if (0 < k && k <= 0.1) {
+        UE_LOG(LogTemp, Error, TEXT("Don't Penetrate"));
+    }
+    
+    // Проникнул и застрял
+    if (0.11 < k && k <= 0.7) {
+//        UE_LOG(LogTemp, Error, TEXT("Penetrate"));
+        
+        ProjectileMovementComponent->Force.Set(0, 0, 0);
+        
+        if( ! Called) {
+            PenetrationDepth = FVector::Dist(GetActorLocation(), _OtherActor->GetActorLocation());
+            UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
+            UE_LOG(LogTemp, Error, TEXT("Component: %s"), OtherActorComp);
+            Called = true;
+        }
+        
+        
+//        SetActorLocation(_OtherActor->GetActorLocation() + ((OtherActorVelocity / OtherActorVelocity.Size()) * PenetrationDepth));
+        SetActorLocation(_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * PenetrationDepth));
+    }
+    
+    // Рикошет
+    if (0.3 < k && k <= 0.7) {
+        if(AttackAngle >= 45)
+            UE_LOG(LogTemp, Error, TEXT("Rebound"));
+        Called = true;
+    }
+    
+    // На вылет
+    if (0.7 < k && k <= 1) {
+        UE_LOG(LogTemp, Error, TEXT("Through"));
+    }
 }

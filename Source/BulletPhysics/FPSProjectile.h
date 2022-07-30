@@ -22,6 +22,7 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 // ---------------------------
     
     AActor* _OtherActor;
+    UPrimitiveComponent* OtherActorComp;
     FVector OtherActorVelocity;
     
     FVector OtherActorStart;
@@ -62,6 +63,15 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 
     FHitResult LineOutHit;
     FCollisionQueryParams LineCollisionParams;
+    
+// ---------------------------
+    
+    bool IsHited;
+    bool Called;
+    float k;                // Коэфф. плотности (должно находиться у объектов)
+    float AttackAngle;      // Угол атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
+    float PenetrationDepth;
+    
     
 public:	
 	// Sets default values for this actor's properties
@@ -112,4 +122,7 @@ public:
     
     UFUNCTION()
     bool NarrowPhaseCollisionDetection(FVector Velocity, float Radius);
+    
+    UFUNCTION()
+    void ProjectileReflection();
 };

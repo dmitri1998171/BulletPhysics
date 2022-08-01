@@ -110,7 +110,7 @@ public:
     void CollisionDetection(float DeltaTime);
     
     UFUNCTION()
-    bool cross(FVector a, FVector c, FVector b, FVector d);
+    bool Cross(FVector a, FVector c, FVector b, FVector d);
     
     UFUNCTION()
     void BroadPhaseCollisionDetection(float DeltaTime);
@@ -119,7 +119,7 @@ public:
     void CalcVelocity(FVector& DeltaVelocity);
     
     UFUNCTION()
-    bool NarrowPhaseCollisionDetection(FVector Velocity, float Radius);
+    void NarrowPhaseCollisionDetection(bool isReverse);
     
     UFUNCTION()
     void ProjectileReflection();

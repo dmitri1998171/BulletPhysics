@@ -24,7 +24,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCalcVelocity); \
 	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
-	DECLARE_FUNCTION(execcross); \
+	DECLARE_FUNCTION(execCross); \
 	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execOnHit);
 
@@ -35,7 +35,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCalcVelocity); \
 	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
-	DECLARE_FUNCTION(execcross); \
+	DECLARE_FUNCTION(execCross); \
 	DECLARE_FUNCTION(execCollisionDetection); \
 	DECLARE_FUNCTION(execOnHit);
 

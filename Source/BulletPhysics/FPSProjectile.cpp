@@ -85,7 +85,7 @@ void AFPSProjectile::Tick(float DeltaTime)
 
     if( ! IsHited) {
         SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
-//        BroadPhaseCollisionDetection(DeltaTime);
+        BroadPhaseCollisionDetection(DeltaTime);
     }
     else {
 //        ProjectileReflection();
@@ -139,7 +139,7 @@ void AFPSProjectile::CollisionDetection(float DeltaTime) {
     }
 }
 
-bool AFPSProjectile::cross(FVector a, FVector c, FVector b, FVector d) {
+bool AFPSProjectile::Cross(FVector a, FVector c, FVector b, FVector d) {
     float n;
 //    https://habr.com/ru/post/523440/
     
@@ -194,43 +194,31 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
 
 //        Проверка столкновений с движущимися объектами 
         if(OtherActorVelocity.IsZero() == false) {
-//            UE_LOG(LogTemp, Warning, TEXT("%s's Velocity: %s"), *_OtherActor->GetName(), *OtherActorVelocity.ToString());
-
-            /*
-             Вычисления работают только для объектов, движущихся через физику (Velocity). При движении по сплайну нормально прочитать Velocity и нарисовать траекторию невозможно!
-             Velocity высчитывается только при вкл. симуляции физики!
-            */
+            
+//             Вычисления работают только для объектов, движущихся через физику (Velocity). При движении по сплайну нормально прочитать Velocity и нарисовать траекторию невозможно!
+//             Velocity высчитывается только при вкл. симуляции физики!
 
             OtherActorStart = _OtherActor->GetActorLocation();
             OtherActorEnd = OtherActorStart + (OtherActorVelocity * 90);
             DrawDebugLine(GetWorld(), OtherActorStart, OtherActorEnd, FColor::Red, false, DeltaTime * 1.5, 0, 5);
             
 //            Проверка пересечения траекторий по XY
-            if(cross(GetActorLocation(), GetActorLocation() + ProjectileMovementComponent->Force, OtherActorStart, OtherActorStart + OtherActorVelocity)) {
+            if(Cross(GetActorLocation(), GetActorLocation() + ProjectileMovementComponent->Force, OtherActorStart, OtherActorStart + OtherActorVelocity)) {
 //                UE_LOG(LogTemp, Warning, TEXT("Impact point: %s"), *ImpactPoint.ToString());
                     
                 length = FVector::DistXY(GetActorLocation(), ImpactPoint);
                 time = length / ProjectileMovementComponent->Force.Size2D();
                 
                 OtherActorLength = OtherActorVelocity.Size2D() * time;
-//                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
+                UE_LOG(LogTemp, Warning, TEXT("length: %f"), length);
+                UE_LOG(LogTemp, Warning, TEXT("time: %f"), time);
+                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
                 
-//                _OtherActor->SetActorLocation(OtherActorStart + OtherActorLength);
+                NarrowPhaseCollisionDetection(false);
                 
-//                Узкая фаза проверки столкновений
-                if(GetWorld()->OverlapMultiByChannel(ProjectileOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(_CubeSize), ProjectileCollisionParams)) {
-                    
-            //        Проходимся по всем элементам, проникщих внутрь снаряда, и отсеиваем лишнее
-                    for (int i = 0; i < ProjectileOverlapResult.Num(); i++) {
-                        if(ProjectileOverlapResult[i].GetActor() != this) {
-                            GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("Collision detected!")));
-                            
-//                            IsHited = true;
-                        }
-                    }
-                }
-                
-//                _OtherActor->SetActorLocation(OtherActorStart);
+//                Если на старте скорость слишком большая, а расстояние слишком маленькое, то снаряд проскочит точку пересечения
+//                и при подстановке расстояние будет прибавляться, отдаляя снаряд еще дальше - надо также отнимать расстояние!
+                NarrowPhaseCollisionDetection(true);
             }
         }
         
@@ -255,13 +243,25 @@ void AFPSProjectile::CalcVelocity(FVector& DeltaVelocity) {
     }
 }
 
-bool AFPSProjectile::NarrowPhaseCollisionDetection(FVector Velocity, float Radius) {
-    float Diametr = Radius * 2;
+void AFPSProjectile::NarrowPhaseCollisionDetection(bool isReverse) {
+    OtherActorEnd = ProjectileMovementComponent->Velocity * OtherActorLength;
     
-    if((Velocity.X <= Diametr) || (Velocity.Y <= Diametr) || (Velocity.Z <= Diametr))
-        return true;
+    if(isReverse)
+        OtherActorEnd *= -1;
         
-    return false;
+    _OtherActor->SetActorLocation(OtherActorStart + OtherActorEnd);
+    
+    if(GetWorld()->OverlapMultiByChannel(ProjectileOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(_CubeSize), ProjectileCollisionParams)) {
+//        Проходимся по всем элементам, проникших внутрь снаряда, и отсеиваем лишнее
+        for (int i = 0; i < ProjectileOverlapResult.Num(); i++) {
+            if(ProjectileOverlapResult[i].GetActor() != this) {
+                GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Green, FString::Printf(TEXT("Collision detected!")));
+                IsHited = true;
+            }
+        }
+    }
+    
+    _OtherActor->SetActorLocation(OtherActorStart);
 }
 
 void AFPSProjectile::ProjectileReflection() {

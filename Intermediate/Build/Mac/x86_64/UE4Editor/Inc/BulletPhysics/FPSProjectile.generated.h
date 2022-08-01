@@ -17,8 +17,8 @@ struct FHitResult;
 #endif
 #define BULLETPHYSICS_FPSProjectile_generated_h
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_SPARSE_DATA
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_SPARSE_DATA
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execProjectileReflection); \
 	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
@@ -29,7 +29,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execOnHit);
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execProjectileReflection); \
 	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
@@ -40,7 +40,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execOnHit);
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_INCLASS_NO_PURE_DECLS \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAFPSProjectile(); \
 	friend struct Z_Construct_UClass_AFPSProjectile_Statics; \
@@ -49,7 +49,7 @@ public: \
 	DECLARE_SERIALIZER(AFPSProjectile)
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_INCLASS \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_INCLASS \
 private: \
 	static void StaticRegisterNativesAFPSProjectile(); \
 	friend struct Z_Construct_UClass_AFPSProjectile_Statics; \
@@ -58,7 +58,7 @@ public: \
 	DECLARE_SERIALIZER(AFPSProjectile)
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_STANDARD_CONSTRUCTORS \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AFPSProjectile(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AFPSProjectile) \
@@ -71,7 +71,7 @@ private: \
 public:
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_ENHANCED_CONSTRUCTORS \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AFPSProjectile(AFPSProjectile&&); \
@@ -82,28 +82,28 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AFPSProjectile)
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_PRIVATE_PROPERTY_OFFSET
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_13_PROLOG
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_GENERATED_BODY_LEGACY \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_PRIVATE_PROPERTY_OFFSET
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_11_PROLOG
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_PRIVATE_PROPERTY_OFFSET \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_SPARSE_DATA \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_INCLASS \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_STANDARD_CONSTRUCTORS \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_PRIVATE_PROPERTY_OFFSET \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_SPARSE_DATA \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_RPC_WRAPPERS \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_INCLASS \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_GENERATED_BODY \
+#define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_PRIVATE_PROPERTY_OFFSET \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_SPARSE_DATA \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_INCLASS_NO_PURE_DECLS \
-	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_16_ENHANCED_CONSTRUCTORS \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_PRIVATE_PROPERTY_OFFSET \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_SPARSE_DATA \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_INCLASS_NO_PURE_DECLS \
+	BulletPhysics_Source_BulletPhysics_FPSProjectile_h_14_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

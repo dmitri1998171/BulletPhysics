@@ -5,9 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
-#include "GameFramework/ProjectileMovementComponent.h"
 #include "BulletComponent.h"
-#include "Components/LineBatchComponent.h"
 #include "FPSProjectile.generated.h"
 
 UCLASS()
@@ -22,7 +20,8 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
 // ---------------------------
     
     AActor* _OtherActor;
-    UPrimitiveComponent* OtherActorComp;
+//    UPrimitiveComponent* OtherActorComp;
+    USceneComponent* OtherActorComp;
     FVector OtherActorVelocity;
     
     FVector OtherActorStart;
@@ -71,7 +70,6 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     float k;                // Коэфф. плотности (должно находиться у объектов)
     float AttackAngle;      // Угол атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
     float PenetrationDepth;
-    
     
 public:	
 	// Sets default values for this actor's properties

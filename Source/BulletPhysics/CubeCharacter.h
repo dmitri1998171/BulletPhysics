@@ -23,17 +23,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+    UFUNCTION()
+    void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+    
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
     
     UPROPERTY(VisibleAnywhere)
    UStaticMeshComponent* VisualMesh;
     
-    // Handles input for moving forward and backward.
-    UFUNCTION()
-    void MoveForwardByArrow(float Value);
-
-    // Handles input for moving right and left.
-    UFUNCTION()
-    void MoveRightByArrow(float Value);
 };

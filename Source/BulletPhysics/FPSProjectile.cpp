@@ -8,9 +8,6 @@ AFPSProjectile::AFPSProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-        
-    CoordCalc = false;
-    PastCoordCalc = false;
     
     if(!RootComponent)
     {
@@ -22,9 +19,10 @@ AFPSProjectile::AFPSProjectile()
         // Use a sphere as a simple collision representation.
         CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
         // Set the sphere's collision profile name to "Projectile".
-//        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
-        // Event called when component hits something.
-//        CollisionComponent->OnComponentHit.AddDynamic(this, &AFPSProjectile::OnHit);
+        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
+        
+        CollisionComponent->SetNotifyRigidBodyCollision(true);
+        
         // Set the sphere's collision radius.
         CollisionComponent->InitSphereRadius(15.0f);
         // Set the root component to be the collision component.
@@ -59,10 +57,15 @@ AFPSProjectile::AFPSProjectile()
     // Delete the projectile after 3 seconds.
     InitialLifeSpan = 3.0f;
     
+    CoordCalc = false;
+    PastCoordCalc = false;
+    
     IsHited = false;
     Called = false;
+    
     k = 0.5;
     AttackAngle = 0;
+    
     _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
 }
 
@@ -70,7 +73,9 @@ AFPSProjectile::AFPSProjectile()
 void AFPSProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+    
+    // Event called when component hits something.
+    CollisionComponent->OnComponentHit.AddDynamic(this, &AFPSProjectile::OnHit);
 }
 
 // Called every frame
@@ -80,10 +85,10 @@ void AFPSProjectile::Tick(float DeltaTime)
 
     if( ! IsHited) {
         SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
-        BroadPhaseCollisionDetection(DeltaTime);
+//        BroadPhaseCollisionDetection(DeltaTime);
     }
     else {
-        ProjectileReflection();
+//        ProjectileReflection();
     }
         
 //    CollisionDetection(DeltaTime);
@@ -99,9 +104,17 @@ void AFPSProjectile::FireInDirection(const FVector& ShootDirection)
 // Function that is called when the projectile hits something.
 void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-    if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
-    {
-        OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity / 100, Hit.ImpactPoint);
+    UE_LOG(LogTemp, Warning, TEXT("Name: %s"), *OtherActor->GetName());
+    UE_LOG(LogTemp, Warning, TEXT("Normal: %s"), *Hit.Normal.ToString());
+    
+    if (OtherActor != this) {
+        if(OtherComponent->IsSimulatingPhysics()) {
+            AttackAngle = ProjectileMovementComponent->Force.CosineAngle2D(Hit.Normal);
+            UE_LOG(LogTemp, Warning, TEXT("Cos(AttackAngle): %f"), AttackAngle);
+            
+            
+//            OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity, Hit.ImpactPoint);
+        }
     }
 
     Destroy();
@@ -173,7 +186,8 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
         for (int i = 0; i < BoxOverlapResult.Num(); i++) {
             if(BoxOverlapResult[i].GetActor() != this) {
                 _OtherActor = BoxOverlapResult[i].GetActor();
-                OtherActorComp = BoxOverlapResult[i].GetComponent();
+//                OtherActorComp = BoxOverlapResult[i].GetComponent();
+                OtherActorComp = _OtherActor->GetRootComponent();
                 CalcVelocity(OtherActorVelocity);
             }
         }
@@ -201,6 +215,8 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
                 OtherActorLength = OtherActorVelocity.Size2D() * time;
 //                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
                 
+//                _OtherActor->SetActorLocation(OtherActorStart + OtherActorLength);
+                
 //                Узкая фаза проверки столкновений
                 if(GetWorld()->OverlapMultiByChannel(ProjectileOverlapResult, GetActorLocation(), FQuat(0, 0, 0, 0), ECC_Visibility, FCollisionShape::MakeSphere(_CubeSize), ProjectileCollisionParams)) {
                     
@@ -209,10 +225,12 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
                         if(ProjectileOverlapResult[i].GetActor() != this) {
                             GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("Collision detected!")));
                             
-                            IsHited = true;
+//                            IsHited = true;
                         }
                     }
                 }
+                
+//                _OtherActor->SetActorLocation(OtherActorStart);
             }
         }
         
@@ -259,9 +277,9 @@ void AFPSProjectile::ProjectileReflection() {
         ProjectileMovementComponent->Force.Set(0, 0, 0);
         
         if( ! Called) {
-            PenetrationDepth = FVector::Dist(GetActorLocation(), _OtherActor->GetActorLocation());
+//            PenetrationDepth = FVector::Dist(GetActorLocation(), _OtherActor->GetActorLocation());
+            PenetrationDepth = GetHorizontalDistanceTo(_OtherActor);
             UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
-            UE_LOG(LogTemp, Error, TEXT("Component: %s"), OtherActorComp);
             Called = true;
         }
         

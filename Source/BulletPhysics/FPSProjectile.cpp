@@ -19,8 +19,13 @@ AFPSProjectile::AFPSProjectile()
         // Use a sphere as a simple collision representation.
         CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
         
+//        CollisionComponent->OnComponentHit.AddDynamic(this, &AFPSProjectile::OnHit);
+//        CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFPSProjectile::OnOverlap);
+        
 //        Чтобы снаряд проходил внутрь объекта, нужно отключить коллизию
-        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("NoCollision"));
+//        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("OverlapAll"));
+        SetActorEnableCollision(false);
+        
 //        Для отлова событий коллизий
         CollisionComponent->SetNotifyRigidBodyCollision(true);
         
@@ -64,7 +69,7 @@ AFPSProjectile::AFPSProjectile()
     IsHited = false;
     Called = false;
     
-    k = 0.7;
+    k = 0.6;
     AttackAngle = 0;
     
     _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
@@ -89,8 +94,13 @@ void AFPSProjectile::Tick(float DeltaTime)
         BroadPhaseCollisionDetection(DeltaTime);
     }
     else {
-        if(_OtherActor)
-            SetActorLocation(_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * PenetrationDepth));
+        if(_OtherActor) {
+//            SetActorLocation(_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * PenetrationDepth));
+            NewPos = (_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * (OtherActorRadius + CollisionComponent->GetScaledSphereRadius())));
+            NewPos.X = NewPos.X - PenetrationDepth;
+//            UE_LOG(LogTemp, Warning, TEXT("New Pos: %s"), *NewPos.ToString());
+            SetActorLocation(NewPos);
+        }
     }
 }
 
@@ -103,7 +113,7 @@ void AFPSProjectile::FireInDirection(const FVector& ShootDirection)
 // Function that is called when the projectile hits something.
 void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-//    UE_LOG(LogTemp, Warning, TEXT("Name: %s"), *OtherActor->GetName());
+    UE_LOG(LogTemp, Warning, TEXT("OnHit Name: %s"), *OtherActor->GetName());
 //    UE_LOG(LogTemp, Warning, TEXT("Normal: %s"), *Hit.Normal.ToString());
 //
 //    if (OtherActor != this) {
@@ -119,12 +129,22 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor
 //    Destroy();
 }
 
-void AFPSProjectile::CollisionDetection(float DeltaTime) {
-    Start = GetActorLocation() + (ProjectileMovementComponent->Velocity * CollisionComponent->GetScaledSphereRadius());   // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд;
+void AFPSProjectile::OnOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    UE_LOG(LogTemp, Error, TEXT("OnOverlap Name: %s"), *OtherActor->GetName());
+
+//    if (OtherActor && (OtherActor != this)) {
+//
+//    }
+}
+
+void AFPSProjectile::CollisionDetection() {
+    // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд;
+    Start = GetActorLocation();// + (ProjectileMovementComponent->Velocity * CollisionComponent->GetScaledSphereRadius());
     End = Start + ProjectileMovementComponent->Force;
     
-    for (int i = 0; i < 250; i++) {
-        DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, DeltaTime * 1.5, 0, CollisionComponent->GetScaledSphereRadius());
+//    for (int i = 0; i < 250; i++) {
+        DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, GetWorld()->GetDeltaSeconds() * 1.5, 0, CollisionComponent->GetScaledSphereRadius());
         
         if(GetWorld()->LineTraceSingleByChannel(LineOutHit, Start, End, ECC_Visibility, LineCollisionParams)) {
             if(LineOutHit.GetActor() != this) {
@@ -133,9 +153,9 @@ void AFPSProjectile::CollisionDetection(float DeltaTime) {
             }
         }
         
-        Start = End;
-        End += ProjectileMovementComponent->Force;
-    }
+//        Start = End;
+//        End += ProjectileMovementComponent->Force;
+//    }
 }
 
 bool AFPSProjectile::Cross(FVector a, FVector c, FVector b, FVector d) {
@@ -255,7 +275,13 @@ void AFPSProjectile::NarrowPhaseCollisionDetection(bool isReverse) {
         for (int i = 0; i < ProjectileOverlapResult.Num(); i++) {
             if(ProjectileOverlapResult[i].GetActor() != this) {
                 GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Green, FString::Printf(TEXT("Collision detected!")));
+                
+//                LineTrace для получения нормали
+                CollisionDetection();
+                
+//                Определяем реакцию снаряда на столкновение
                 ProjectileReflection();
+                
                 IsHited = true;
             }
         }
@@ -277,16 +303,16 @@ void AFPSProjectile::ProjectileReflection() {
         if( ! Called) {
 //            PenetrationDepth = FVector::Dist(GetActorLocation(), _OtherActor->GetActorLocation());
 //            PenetrationDepth = GetHorizontalDistanceTo(_OtherActor);
-
+            
 //            Рассчет процента текущ. коэфф. плотности к макс. значению
             k_percents = k / 0.7;
             UE_LOG(LogTemp, Error, TEXT("k_percents: %0.f%%"), k_percents * 100);
             
 //            Рассчет макс. расст. проникновения снаряда внутрь объекта
-            MaxPenetrationDepth = 2 * (_OtherActor->GetSimpleCollisionRadius() - CollisionComponent->GetScaledSphereRadius());
-            
-//            if(k >= 0.3)
-//                MaxPenetrationDepth = 2 * (_OtherActor->GetSimpleCollisionRadius() + CollisionComponent->GetScaledSphereRadius());
+            OtherActorRadius = _OtherActor->GetComponentsBoundingBox().GetExtent().X;       // Для квадратных объектов
+//            OtherActorRadius = _OtherActor->GetSimpleCollisionRadius();                     // Для круглых объектов
+                      
+            MaxPenetrationDepth = 2 * OtherActorRadius;
             
 //            Рассчет текущ. глубины проникновения в зависимости от коэфф. плотности
             PenetrationDepth = MaxPenetrationDepth * k_percents;
@@ -297,7 +323,6 @@ void AFPSProjectile::ProjectileReflection() {
         }
         
 //        SetActorLocation(_OtherActor->GetActorLocation() + ((OtherActorVelocity / OtherActorVelocity.Size()) * PenetrationDepth));
-        SetActorLocation(_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * PenetrationDepth));
     }
     
     // Рикошет

@@ -27,6 +27,8 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     FVector OtherActorStart;
     FVector OtherActorEnd;
     
+    float OtherActorRadius;
+    
 // ---------------------------
     
     bool CoordCalc;
@@ -68,10 +70,12 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     bool IsHited;
     bool Called;
     float AttackAngle;      // Угол атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
-    float k;                // Коэфф. плотности (должно находиться у объектов)
+    float k;                // density  Коэфф. плотности (должно находиться у объектов)
     float k_percents;       // Процентное соотн. текущ. плотности к максимальному значению
     float PenetrationDepth;
     float MaxPenetrationDepth;
+    
+    FVector NewPos;
     
 public:	
 	// Sets default values for this actor's properties
@@ -109,7 +113,10 @@ public:
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
         
     UFUNCTION()
-    void CollisionDetection(float DeltaTime);
+    void OnOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+    
+    UFUNCTION()
+    void CollisionDetection();
     
     UFUNCTION()
     bool Cross(FVector a, FVector c, FVector b, FVector d);

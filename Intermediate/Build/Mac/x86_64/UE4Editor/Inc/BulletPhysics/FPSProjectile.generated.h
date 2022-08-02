@@ -26,6 +26,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCross); \
 	DECLARE_FUNCTION(execCollisionDetection); \
+	DECLARE_FUNCTION(execOnOverlap); \
 	DECLARE_FUNCTION(execOnHit);
 
 
@@ -37,6 +38,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execBroadPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCross); \
 	DECLARE_FUNCTION(execCollisionDetection); \
+	DECLARE_FUNCTION(execOnOverlap); \
 	DECLARE_FUNCTION(execOnHit);
 
 

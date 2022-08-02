@@ -18,9 +18,10 @@ AFPSProjectile::AFPSProjectile()
     {
         // Use a sphere as a simple collision representation.
         CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-        // Set the sphere's collision profile name to "Projectile".
-        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
         
+//        Чтобы снаряд проходил внутрь объекта, нужно отключить коллизию
+        CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("NoCollision"));
+//        Для отлова событий коллизий
         CollisionComponent->SetNotifyRigidBodyCollision(true);
         
         // Set the sphere's collision radius.
@@ -63,7 +64,7 @@ AFPSProjectile::AFPSProjectile()
     IsHited = false;
     Called = false;
     
-    k = 0.5;
+    k = 0.7;
     AttackAngle = 0;
     
     _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
@@ -88,11 +89,9 @@ void AFPSProjectile::Tick(float DeltaTime)
         BroadPhaseCollisionDetection(DeltaTime);
     }
     else {
-//        ProjectileReflection();
+        if(_OtherActor)
+            SetActorLocation(_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * PenetrationDepth));
     }
-        
-//    CollisionDetection(DeltaTime);
-
 }
 
 // Function that initializes the projectile's velocity in the shoot direction.
@@ -104,20 +103,20 @@ void AFPSProjectile::FireInDirection(const FVector& ShootDirection)
 // Function that is called when the projectile hits something.
 void AFPSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Name: %s"), *OtherActor->GetName());
-    UE_LOG(LogTemp, Warning, TEXT("Normal: %s"), *Hit.Normal.ToString());
-    
-    if (OtherActor != this) {
-        if(OtherComponent->IsSimulatingPhysics()) {
-            AttackAngle = ProjectileMovementComponent->Force.CosineAngle2D(Hit.Normal);
-            UE_LOG(LogTemp, Warning, TEXT("Cos(AttackAngle): %f"), AttackAngle);
-            
+//    UE_LOG(LogTemp, Warning, TEXT("Name: %s"), *OtherActor->GetName());
+//    UE_LOG(LogTemp, Warning, TEXT("Normal: %s"), *Hit.Normal.ToString());
+//
+//    if (OtherActor != this) {
+//        if(OtherComponent->IsSimulatingPhysics()) {
+//            AttackAngle = ProjectileMovementComponent->Force.CosineAngle2D(Hit.Normal);
+//            UE_LOG(LogTemp, Warning, TEXT("Cos(AttackAngle): %f"), AttackAngle);
             
 //            OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity, Hit.ImpactPoint);
-        }
-    }
+//        }
+//    }
 
-    Destroy();
+//    Не уничтожаем объект, чтобы он продолжал находиться внутри объекта после столкновения
+//    Destroy();
 }
 
 void AFPSProjectile::CollisionDetection(float DeltaTime) {
@@ -210,9 +209,9 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
                 time = length / ProjectileMovementComponent->Force.Size2D();
                 
                 OtherActorLength = OtherActorVelocity.Size2D() * time;
-                UE_LOG(LogTemp, Warning, TEXT("length: %f"), length);
-                UE_LOG(LogTemp, Warning, TEXT("time: %f"), time);
-                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
+//                UE_LOG(LogTemp, Warning, TEXT("length: %f"), length);
+//                UE_LOG(LogTemp, Warning, TEXT("time: %f"), time);
+//                UE_LOG(LogTemp, Warning, TEXT("OtherActorLength: %f"), OtherActorLength);
                 
                 NarrowPhaseCollisionDetection(false);
                 
@@ -256,12 +255,13 @@ void AFPSProjectile::NarrowPhaseCollisionDetection(bool isReverse) {
         for (int i = 0; i < ProjectileOverlapResult.Num(); i++) {
             if(ProjectileOverlapResult[i].GetActor() != this) {
                 GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Green, FString::Printf(TEXT("Collision detected!")));
+                ProjectileReflection();
                 IsHited = true;
             }
         }
     }
     
-    _OtherActor->SetActorLocation(OtherActorStart);
+//    _OtherActor->SetActorLocation(OtherActorStart);
 }
 
 void AFPSProjectile::ProjectileReflection() {
@@ -272,17 +272,29 @@ void AFPSProjectile::ProjectileReflection() {
     
     // Проникнул и застрял
     if (0.11 < k && k <= 0.7) {
-//        UE_LOG(LogTemp, Error, TEXT("Penetrate"));
-        
         ProjectileMovementComponent->Force.Set(0, 0, 0);
         
         if( ! Called) {
 //            PenetrationDepth = FVector::Dist(GetActorLocation(), _OtherActor->GetActorLocation());
-            PenetrationDepth = GetHorizontalDistanceTo(_OtherActor);
+//            PenetrationDepth = GetHorizontalDistanceTo(_OtherActor);
+
+//            Рассчет процента текущ. коэфф. плотности к макс. значению
+            k_percents = k / 0.7;
+            UE_LOG(LogTemp, Error, TEXT("k_percents: %0.f%%"), k_percents * 100);
+            
+//            Рассчет макс. расст. проникновения снаряда внутрь объекта
+            MaxPenetrationDepth = 2 * (_OtherActor->GetSimpleCollisionRadius() - CollisionComponent->GetScaledSphereRadius());
+            
+//            if(k >= 0.3)
+//                MaxPenetrationDepth = 2 * (_OtherActor->GetSimpleCollisionRadius() + CollisionComponent->GetScaledSphereRadius());
+            
+//            Рассчет текущ. глубины проникновения в зависимости от коэфф. плотности
+            PenetrationDepth = MaxPenetrationDepth * k_percents;
+            
+            UE_LOG(LogTemp, Error, TEXT("MaxPenetrationDepth: %f"), MaxPenetrationDepth);
             UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
             Called = true;
         }
-        
         
 //        SetActorLocation(_OtherActor->GetActorLocation() + ((OtherActorVelocity / OtherActorVelocity.Size()) * PenetrationDepth));
         SetActorLocation(_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * PenetrationDepth));

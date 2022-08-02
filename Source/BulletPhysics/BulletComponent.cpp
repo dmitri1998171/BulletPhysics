@@ -18,7 +18,7 @@ UBulletComponent::UBulletComponent() {
 /*   Система СИ: кг-м-с   */
     Mass = 0.004;
     
-    InitialSpeed = 50000;
+    InitialSpeed = 500;
     
     EnableWind = true;
     Wind = FVector(1, 0, 0);

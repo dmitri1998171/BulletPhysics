@@ -67,9 +67,11 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     
     bool IsHited;
     bool Called;
-    float k;                // Коэфф. плотности (должно находиться у объектов)
     float AttackAngle;      // Угол атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
+    float k;                // Коэфф. плотности (должно находиться у объектов)
+    float k_percents;       // Процентное соотн. текущ. плотности к максимальному значению
     float PenetrationDepth;
+    float MaxPenetrationDepth;
     
 public:	
 	// Sets default values for this actor's properties

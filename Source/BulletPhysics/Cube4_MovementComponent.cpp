@@ -1,8 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "Cube4_MovementComponent.h"
-
-UCube4_MovementComponent::UCube4_MovementComponent() {
-    Velocity = FVector(3, 0, 0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:361b3799dd7b3e875e88ae1a6db46de56f6225e3753623c4e86593743120c49d
+size 209

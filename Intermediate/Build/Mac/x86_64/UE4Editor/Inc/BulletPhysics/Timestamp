@@ -1,7 +1,3 @@
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/BulletPhysicsGameModeBase.h
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/CubeCharacter.h
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/Cube4_MovementComponent.h
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/FPSHUD.h
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/FPSProjectile.h
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/FPSCharacter.h
-/Users/dmitry/Documents/Unreal Projects/BulletPhysics/Source/BulletPhysics/BulletComponent.h
+version https://git-lfs.github.com/spec/v1
+oid sha256:43bbe65c3dd91690beb8801e25eec7b45016ac79fdd0825a0f14e586ef19987e
+size 653

@@ -1,35 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-/*===========================================================================
-	Generated code exported from UnrealHeaderTool.
-	DO NOT modify this manually! Edit the corresponding .h files instead!
-===========================================================================*/
-
-#include "UObject/GeneratedCppIncludes.h"
-#ifdef _MSC_VER
-#pragma warning (push)
-#pragma warning (disable : 4883)
-#endif
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
-void EmptyLinkFunctionForGeneratedCodeBulletPhysics_init() {}
-	UPackage* Z_Construct_UPackage__Script_BulletPhysics()
-	{
-		static UPackage* ReturnPackage = nullptr;
-		if (!ReturnPackage)
-		{
-			static const UE4CodeGen_Private::FPackageParams PackageParams = {
-				"/Script/BulletPhysics",
-				nullptr,
-				0,
-				PKG_CompiledIn | 0x00000000,
-				0xF39782FC,
-				0xB28D1DC9,
-				METADATA_PARAMS(nullptr, 0)
-			};
-			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);
-		}
-		return ReturnPackage;
-	}
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-#ifdef _MSC_VER
-#pragma warning (pop)
-#endif
+version https://git-lfs.github.com/spec/v1
+oid sha256:43340e5abfd7bbea9b6bfeecff8a094b642e0333336ff0d81d247a0c4eb0ac3d
+size 1102

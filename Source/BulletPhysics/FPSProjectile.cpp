@@ -58,10 +58,11 @@ AFPSProjectile::AFPSProjectile() {
     CoordCalc = false;
     PastCoordCalc = false;
     
-    Density = 0.1;
+    Density = 1;
     AttackAngle = 0;
     
     _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
+    FloorPosZ = -100;
 }
 
 // Called when the game starts or when spawned
@@ -82,8 +83,9 @@ void AFPSProjectile::Tick(float DeltaTime) {
             BroadPhaseCollisionDetection(DeltaTime);
             break;
         case DONT_PENETRATE:
-            UE_LOG(LogTemp, Error, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
-            SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
+//            Если снаряд выше пола - опускаем вниз
+            if((GetActorLocation().Z - CollisionComponent->GetUnscaledSphereRadius()) > FloorPosZ)
+                SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
             break;
         case PENETRATE:
             //            (OtherActorVelocity / OtherActorVelocity.Size()) <-> _OtherActor->GetActorForwardVector()
@@ -95,7 +97,7 @@ void AFPSProjectile::Tick(float DeltaTime) {
             
             break;
         case THROUGH:
-            
+            SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
             break;
         default:
             break;
@@ -270,7 +272,7 @@ void AFPSProjectile::NarrowPhaseCollisionDetection(bool isReverse) {
 void AFPSProjectile::ProjectileReflection() {
     // Не пробил
     if (0 < Density && Density < 0.11) {
-        UE_LOG(LogTemp, Error, TEXT("Don't Penetrate"));
+//        UE_LOG(LogTemp, Error, TEXT("Don't Penetrate"));
         ProjectileMovementComponent->Force.Set(0, 0, -ProjectileMovementComponent->Force.Z);
         projectileState = DONT_PENETRATE;
     }
@@ -307,6 +309,7 @@ void AFPSProjectile::ProjectileReflection() {
     // На вылет
     if (0.7 < Density && Density < 1.1) {
         UE_LOG(LogTemp, Error, TEXT("Through"));
+        ProjectileMovementComponent->Force *= Density;
         projectileState = THROUGH;
     }
 }

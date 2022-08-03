@@ -83,6 +83,9 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     
     FVector NewPos;
     int projectileState;
+    float FloorPosZ;            // Высота пола в мировых координатах
+    
+    FVector tmp;
     
 public:	
 	// Sets default values for this actor's properties

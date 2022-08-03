@@ -8,6 +8,14 @@
 #include "BulletComponent.h"
 #include "FPSProjectile.generated.h"
 
+enum ProjectileReflection {
+    FLYING = 0,
+    DONT_PENETRATE = 1,
+    PENETRATE,
+    REBOUND,
+    THROUGH
+};
+
 UCLASS()
 class BULLETPHYSICS_API AFPSProjectile : public AActor
 {
@@ -67,8 +75,6 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     
 // ---------------------------
     
-    bool IsHited;
-    bool Called;
     float AttackAngle;          // Угол атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
     float Density;              // Коэфф. плотности (должно находиться у объектов)
     float Density_percents;     // Процентное соотн. текущ. плотности к максимальному значению
@@ -76,6 +82,7 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     float MaxPenetrationDepth;
     
     FVector NewPos;
+    int projectileState;
     
 public:	
 	// Sets default values for this actor's properties

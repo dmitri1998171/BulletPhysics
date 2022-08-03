@@ -4,8 +4,7 @@
 #include "FPSProjectile.h"
 
 // Sets default values
-AFPSProjectile::AFPSProjectile()
-{
+AFPSProjectile::AFPSProjectile() {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
     
@@ -54,11 +53,10 @@ AFPSProjectile::AFPSProjectile()
     // Delete the projectile after 3 seconds.
     InitialLifeSpan = 3.0f;
     
+    projectileState = 0;
+    
     CoordCalc = false;
     PastCoordCalc = false;
-    
-    IsHited = false;
-    Called = false;
     
     Density = 0.1;
     AttackAngle = 0;
@@ -78,17 +76,29 @@ void AFPSProjectile::BeginPlay() {
 void AFPSProjectile::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-    if( ! IsHited) {
-        SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
-        BroadPhaseCollisionDetection(DeltaTime);
-    }
-    else {
-        if(_OtherActor) {
-//            (OtherActorVelocity / OtherActorVelocity.Size()) <-> _OtherActor->GetActorForwardVector()
+    switch (projectileState) {
+        case FLYING:
+            SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
+            BroadPhaseCollisionDetection(DeltaTime);
+            break;
+        case DONT_PENETRATE:
+            UE_LOG(LogTemp, Error, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
+            SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
+            break;
+        case PENETRATE:
+            //            (OtherActorVelocity / OtherActorVelocity.Size()) <-> _OtherActor->GetActorForwardVector()
             NewPos = (_OtherActor->GetActorLocation() + (_OtherActor->GetActorForwardVector() * (OtherActorRadius + CollisionComponent->GetScaledSphereRadius())));
             NewPos.X = NewPos.X - PenetrationDepth;
             SetActorLocation(NewPos);
-        }
+            break;
+        case REBOUND:
+            
+            break;
+        case THROUGH:
+            
+            break;
+        default:
+            break;
     }
 }
 
@@ -209,6 +219,9 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
 //                Если на старте скорость слишком большая, а расстояние слишком маленькое, то снаряд проскочит точку пересечения
 //                и при подстановке расстояние будет прибавляться, отдаляя снаряд еще дальше - надо также отнимать расстояние!
                 NarrowPhaseCollisionDetection(true);
+                
+//                Определяем реакцию снаряда на столкновение
+                ProjectileReflection();
             }
         }
         
@@ -249,55 +262,51 @@ void AFPSProjectile::NarrowPhaseCollisionDetection(bool isReverse) {
                 
 //                LineTrace для получения нормали
                 CollisionDetection();
-                
-//                Определяем реакцию снаряда на столкновение
-                ProjectileReflection();
-                
-                IsHited = true;
             }
         }
     }
-    
-//    _OtherActor->SetActorLocation(OtherActorStart);
 }
 
 void AFPSProjectile::ProjectileReflection() {
     // Не пробил
-    if (0 < Density && Density <= 0.1) {
+    if (0 < Density && Density < 0.11) {
         UE_LOG(LogTemp, Error, TEXT("Don't Penetrate"));
+        ProjectileMovementComponent->Force.Set(0, 0, -ProjectileMovementComponent->Force.Z);
+        projectileState = DONT_PENETRATE;
     }
     
     // Проникнул и застрял
-    if (0.11 < Density && Density <= 0.7) {
+    if (0.11 < Density && Density < 0.71) {
         ProjectileMovementComponent->Force.Set(0, 0, 0);
         
-        if( ! Called) {
 //            Рассчет процента текущ. коэфф. плотности к макс. значению
-            Density_percents = Density / 0.7;
-            UE_LOG(LogTemp, Error, TEXT("Density_percents: %0.f%%"), Density_percents * 100);
-            
+        Density_percents = Density / 0.7;
+        UE_LOG(LogTemp, Error, TEXT("Density_percents: %0.f%%"), Density_percents * 100);
+        
 //            Рассчет макс. расст. проникновения снаряда внутрь объекта
-            OtherActorRadius = _OtherActor->GetComponentsBoundingBox().GetExtent().X;
-            MaxPenetrationDepth = 2 * OtherActorRadius;
-            
+        OtherActorRadius = _OtherActor->GetComponentsBoundingBox().GetExtent().X;
+        MaxPenetrationDepth = 2 * OtherActorRadius;
+        
 //            Рассчет текущ. глубины проникновения в зависимости от коэфф. плотности
-            PenetrationDepth = MaxPenetrationDepth * Density_percents;
-            
-            UE_LOG(LogTemp, Error, TEXT("MaxPenetrationDepth: %f"), MaxPenetrationDepth);
-            UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
-            Called = true;
-        }
+        PenetrationDepth = MaxPenetrationDepth * Density_percents;
+        
+        UE_LOG(LogTemp, Error, TEXT("MaxPenetrationDepth: %f"), MaxPenetrationDepth);
+        UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
+        
+        projectileState = PENETRATE;
     }
     
     // Рикошет
-    if (0.3 < Density && Density <= 0.7) {
-        if(AttackAngle >= 45)
+    if (0.3 < Density && Density < 0.71) {
+        if(AttackAngle >= 45) {
             UE_LOG(LogTemp, Error, TEXT("Rebound"));
-        Called = true;
+            projectileState = REBOUND;
+        }
     }
     
     // На вылет
-    if (0.7 < Density && Density <= 1) {
+    if (0.7 < Density && Density < 1.1) {
         UE_LOG(LogTemp, Error, TEXT("Through"));
+        projectileState = THROUGH;
     }
 }

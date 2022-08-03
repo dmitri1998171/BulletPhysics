@@ -48,7 +48,7 @@ void AFPSCharacter::Tick(float DeltaTime)
     LaunchDirection = MuzzleRotation.Vector();
     
     // Проверка столкновения с лучом
-    CollisionDetection(DeltaTime);
+//    CollisionDetection(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -113,7 +113,7 @@ void AFPSCharacter::Fire()
 void AFPSCharacter::CollisionDetection(float DeltaTime) {
     ProjectileMovementComponent->Velocity = LaunchDirection;
     ProjectileMovementComponent->CalcForce();
-//    ProjectileMovementComponent->AddResistance(DeltaTime);
+    ProjectileMovementComponent->AddResistance(DeltaTime);
     
 //    UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
     
@@ -126,27 +126,10 @@ void AFPSCharacter::CollisionDetection(float DeltaTime) {
         
         if(GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, CollisionParams)) {
             GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You will hit: %s"), *OutHit.GetActor()->GetName()));
-            break;
         }
         
         Start = End;
         End += ProjectileMovementComponent->Force;
-//        ProjectileMovementComponent->AddResistance(DeltaTime * 0.4);
-    }
-    
-    tmp = ProjectileMovementComponent->Force - (2 * ProjectileMovementComponent->Force.ProjectOnToNormal(OutHit.Normal));
-    tmp.Z = 0;
-    
-    Start = End;
-    End += tmp;
-//    ProjectileMovementComponent->AddResistance(DeltaTime * 0.4);
-    
-    for (int i = 0; i < 1000; i++) {
-        // Отрисовка линии
-        DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, DeltaTime * 1.5, 0, 5);
-        
-        Start = End;
-        End += tmp;
-//        ProjectileMovementComponent->AddResistance(DeltaTime * 0.4);
+        ProjectileMovementComponent->AddResistance(DeltaTime * 0.4);
     }
 }

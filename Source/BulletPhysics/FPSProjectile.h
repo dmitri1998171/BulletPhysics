@@ -75,7 +75,7 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     
 // ---------------------------
     
-    float AttackAngle;          // Косинус угола атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
+    float AttackAngle;          // Угол атаки снаряда к плоскости объекта (нужен для рассчета рикошета)
     float Density;              // Коэфф. плотности (должно находиться у объектов)
     float Density_percents;     // Процентное соотн. текущ. плотности к максимальному значению
     float PenetrationDepth;
@@ -85,9 +85,7 @@ class BULLETPHYSICS_API AFPSProjectile : public AActor
     int projectileState;
     float FloorPosZ;            // Высота пола в мировых координатах
     
-    FVector Vperp;
     FVector tmp;
-    FVector tmp2;
     
 public:	
 	// Sets default values for this actor's properties
@@ -144,7 +142,4 @@ public:
     
     UFUNCTION()
     void ProjectileReflection();
-    
-    UFUNCTION()
-    FVector createReflectionVector(FVector Normal);
 };

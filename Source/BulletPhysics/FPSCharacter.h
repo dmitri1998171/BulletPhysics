@@ -28,7 +28,6 @@ public:
     
     FVector Start;
     FVector End;
-    FVector tmp;
             
     FHitResult OutHit;
     FCollisionQueryParams CollisionParams;

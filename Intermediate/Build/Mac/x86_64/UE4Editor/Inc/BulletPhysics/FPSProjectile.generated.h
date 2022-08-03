@@ -20,7 +20,6 @@ struct FHitResult;
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_22_SPARSE_DATA
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_22_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execcreateReflectionVector); \
 	DECLARE_FUNCTION(execProjectileReflection); \
 	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCalcVelocity); \
@@ -33,7 +32,6 @@ struct FHitResult;
 
 #define BulletPhysics_Source_BulletPhysics_FPSProjectile_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execcreateReflectionVector); \
 	DECLARE_FUNCTION(execProjectileReflection); \
 	DECLARE_FUNCTION(execNarrowPhaseCollisionDetection); \
 	DECLARE_FUNCTION(execCalcVelocity); \

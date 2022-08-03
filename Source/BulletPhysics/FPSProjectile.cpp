@@ -58,7 +58,7 @@ AFPSProjectile::AFPSProjectile() {
     CoordCalc = false;
     PastCoordCalc = false;
     
-    Density = 1;
+    Density = 0.5;
     AttackAngle = 0;
     
     _CubeSize = CollisionComponent->GetScaledSphereRadius() * 2;
@@ -94,7 +94,12 @@ void AFPSProjectile::Tick(float DeltaTime) {
             SetActorLocation(NewPos);
             break;
         case REBOUND:
+            tmp2 = createReflectionVector(LineOutHit.Normal);
             
+            UE_LOG(LogTemp, Error, TEXT("tmp: %s"), *tmp2.ToString());
+            UE_LOG(LogTemp, Warning, TEXT("Force: %s"), *ProjectileMovementComponent->Force.ToString());
+            
+            SetActorLocation(GetActorLocation() + tmp2);
             break;
         case THROUGH:
             SetActorLocation(GetActorLocation() + ProjectileMovementComponent->Force);
@@ -137,12 +142,15 @@ void AFPSProjectile::OnOverlap(class UPrimitiveComponent* Comp, class AActor* Ot
 void AFPSProjectile::CollisionDetection() {
     // Домнажаем на Velocity чтобы отодвинуть точку старта только в направлении движ. снаряда. Иначе траектория будет проходить рядом, а не через снаряд;
     Start = GetActorLocation();
-    End = Start + ProjectileMovementComponent->Force + (ProjectileMovementComponent->Velocity * CollisionComponent->GetScaledSphereRadius());
+    End = Start + ProjectileMovementComponent->Force + (ProjectileMovementComponent->Force.GetUnsafeNormal() * CollisionComponent->GetScaledSphereRadius());
     DrawDebugLine(GetWorld(), Start, End, FColor::Yellow, false, GetWorld()->GetDeltaSeconds() * 1.5, 0, CollisionComponent->GetScaledSphereRadius());
     
     if(GetWorld()->LineTraceSingleByChannel(LineOutHit, Start, End, ECC_Visibility, LineCollisionParams)) {
         if(LineOutHit.GetActor() != this) {
             GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Yellow, FString::Printf(TEXT("You will hit: %s"), *LineOutHit.GetActor()->GetName()));
+            
+            AttackAngle = -1 * ProjectileMovementComponent->Force.CosineAngle2D(LineOutHit.Normal);
+            UE_LOG(LogTemp, Warning, TEXT("Cos(AttackAngle): %f"), AttackAngle);
         }
     }
 }
@@ -220,7 +228,7 @@ void AFPSProjectile::BroadPhaseCollisionDetection(float DeltaTime) {
                 
 //                Если на старте скорость слишком большая, а расстояние слишком маленькое, то снаряд проскочит точку пересечения
 //                и при подстановке расстояние будет прибавляться, отдаляя снаряд еще дальше - надо также отнимать расстояние!
-                NarrowPhaseCollisionDetection(true);
+//                NarrowPhaseCollisionDetection(true);
                 
 //                Определяем реакцию снаряда на столкновение
                 ProjectileReflection();
@@ -283,7 +291,7 @@ void AFPSProjectile::ProjectileReflection() {
         
 //            Рассчет процента текущ. коэфф. плотности к макс. значению
         Density_percents = Density / 0.7;
-        UE_LOG(LogTemp, Error, TEXT("Density_percents: %0.f%%"), Density_percents * 100);
+//        UE_LOG(LogTemp, Error, TEXT("Density_percents: %0.f%%"), Density_percents * 100);
         
 //            Рассчет макс. расст. проникновения снаряда внутрь объекта
         OtherActorRadius = _OtherActor->GetComponentsBoundingBox().GetExtent().X;
@@ -292,15 +300,15 @@ void AFPSProjectile::ProjectileReflection() {
 //            Рассчет текущ. глубины проникновения в зависимости от коэфф. плотности
         PenetrationDepth = MaxPenetrationDepth * Density_percents;
         
-        UE_LOG(LogTemp, Error, TEXT("MaxPenetrationDepth: %f"), MaxPenetrationDepth);
-        UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
+//        UE_LOG(LogTemp, Error, TEXT("MaxPenetrationDepth: %f"), MaxPenetrationDepth);
+//        UE_LOG(LogTemp, Error, TEXT("PenetrationDepth: %f"), PenetrationDepth);
         
         projectileState = PENETRATE;
     }
     
     // Рикошет
     if (0.3 < Density && Density < 0.71) {
-        if(AttackAngle >= 45) {
+        if(AttackAngle <= 0.5) {
             UE_LOG(LogTemp, Error, TEXT("Rebound"));
             projectileState = REBOUND;
         }
@@ -312,4 +320,20 @@ void AFPSProjectile::ProjectileReflection() {
         ProjectileMovementComponent->Force *= Density;
         projectileState = THROUGH;
     }
+}
+
+FVector AFPSProjectile::createReflectionVector(FVector Normal) {
+//    Vperp = ProjectileMovementComponent->Force.ProjectOnToNormal(Normal / Normal.GetAbs());
+//    UE_LOG(LogTemp, Error, TEXT("Vperp: %s"), *Vperp.ToString());
+        
+    tmp = ProjectileMovementComponent->Force - (2 * ProjectileMovementComponent->Force.ProjectOnToNormal(Normal));
+//    tmp.Z *= -1;
+    tmp.Z = 0;
+    
+    tmp += (ProjectileMovementComponent->Force - (tmp / ProjectileMovementComponent->Force));
+    
+    if(tmp.ContainsNaN())
+        tmp.Set(0, 0, 0);
+    
+    return tmp;
 }
